@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/header :: common-header"/>
+<head th:replace="common/header :: navbar" />
+<!-- Page Content -->
+    <div class="container">
+
+      <div class="row">
+
+        	<div class="col-sm-12">
+					<div class="card mb-3" th:each="order : ${orders}">
+					    <div class="card-header">
+					      <p class="panel-title" th:text="${#strings.concat('Objednávka ze dne: ', order.createdAt, ' Stav: ', order.status)}">
+					      </p>
+					    </div>
+					    <div class="card-block">
+					      <table class="table table-hover">
+					      	<tr>
+					      		<th>Produkt</th>
+					      		<th>Množství</th>
+					      		<th>Cena za kus</th>
+							</tr>
+					      	<tr th:each="details : ${order.orderDetails}">
+					      		<td th:text="${details.product.name}"></td>
+					      		<td th:text="${details.quantity}"></td>
+					      		<td th:text="${#strings.concat(details.product.price, ' Kč')}"></td>
+					      	</tr>
+					      	<tr>
+					      		<th>Cena dopravy</th>
+					      		<td>&nbsp;</td>
+					      		<th th:text="${#strings.concat(order.shipping.price, ' Kč')}"></th>
+					      	</tr>
+					      </table>
+					    </div>
+					    <div class="card-footer text-muted" th:text="${#strings.concat('Cena celkem: ', order.totalWithShipping, ' Kč')}">
+  						</div>
+					</div>
+					<br />
+					<br /><br />
+					<span th:if="${page gt 0}" class="previous">
+            			<a  th:href="@{/order/my_orders(page=${page - 1})}"
+            			class="btn btn-warning btn-sm float-left" th:text="Previous"></a>
+            		</span>
+            	
+            		<span th:if="${orders.getNumberOfElements() gt 0}">
+            			<a th:href="@{/order/my_orders(page=${page + 1})}"
+            			class="btn btn-warning btn-sm float-right" th:text="Next"></a>
+            		</span>
+        	</div>        		
+       </div>
+      
+	</div>
+	<!-- /.container -->
+    <div th:replace="common/header :: body-bottom-footer"/>
+    <div th:replace="common/header :: body-bottom-scripts"/>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/header :: common-header"/>
+<head th:replace="common/header :: navbar" />
+    
+    <div class="product-big-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2>Přehled produktů</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="category.html">Category</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Sub-category</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="single-product-area">
+        <div class="container">
+            <div class="row">
+               <div class="col-12 col-sm-3">
+                   <h1 class="my-4">Kategorie</h1>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">Telefony</a>
+                        <a href="#" class="list-group-item">Tablety</a>
+                        <a href="#" class="list-group-item">PC</a>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div th:each="product : ${products}" class="col-md-4 col-sm-6">
+                            <div class="single-shop-product">
+                                <div class="product-upper">
+                                    <img th:src="${product.productImageUrl}" alt=""/>
+                                </div>
+                                <h2><a th:href="@{/product/show/{id}(id=${product.id})}" th:text="${product.name}">Apple new mac</a></h2>
+                                <div class="product-carousel-price">
+                                    <ins th:text="${#strings.append(product.price, ' Kč')}">$899.00</ins>
+                                </div>
+                                <div class="product-option-shop">
+                                    <form th:action="@{/cart/add_to_cart}" method="post">
+                                        <input type="hidden" th:value="${product.id}" name="product_id" />
+                                        <button type="submit" class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" >Vložit do košíku</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="row" th:if="${showPagination}">
+                            <div class="col-md-12">
+                                <div class="product-pagination text-center">
+                                    <nav>
+                                        <ul class="pagination">
+                                            <li>
+                                                <a href="#" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                            <li><a href="#">1</a></li>
+                                            <li><a href="#">2</a></li>
+                                            <li><a href="#">3</a></li>
+                                            <li><a href="#">4</a></li>
+                                            <li><a href="#">5</a></li>
+                                            <li>
+                                                <a href="#" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <div th:if="${showPagination}">
+                            <span th:if="${page gt 0}" class="previous">
+                                <a th:if="${category != null}" th:href="@{/product/list/{id}(id=${category.id}, page=${page - 1})}"
+                                   class="btn btn-warning btn-sm float-left" th:text="Previous"></a>
+                                <a th:if="${category == null and #strings.isEmpty(searchTerm)}" th:href="@{/product/list(page=${page - 1})}"
+                                   class="btn btn-warning btn-sm float-left" th:text="Previous"></a>
+                                <a th:if="${category == null and !#strings.isEmpty(searchTerm)}" th:href="@{/product/list(page=${page - 1}, searchTerm=${searchTerm})}"
+                                   class="btn btn-warning btn-sm float-left" th:text="Previous"></a>
+                            </span>
+
+                            <span th:if="${products.getNumberOfElements() gt 0}">
+
+                                <a th:if="${category != null}" th:href="@{/product/list/{id}(id=${category.id}, page=${page + 1})}"
+                                   class="btn btn-warning btn-sm float-right" th:text="Next"></a>
+                                <a th:if="${category == null and #strings.isEmpty(searchTerm)}" th:href="@{/product/list(page=${page + 1})}"
+                                   class="btn btn-warning btn-sm float-right" th:text="Next"></a>
+                                <a th:if="${category == null and !#strings.isEmpty(searchTerm)}" th:href="@{/product/list(page=${page + 1}, searchTerm=${searchTerm})}"
+                                   class="btn btn-warning btn-sm float-right" th:text="Next"></a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /.container -->
+    <div th:replace="common/header :: footer-area"/>
+    <div th:replace="common/header :: body-bottom-scripts"/>
+
+
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/header :: common-header"/>
+<head th:replace="common/header :: navbar" />
+
+    <div class="product-big-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2>Registrace</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Page title area -->
+    
+    
+    <div class="container">
+    	<div class="row main">
+    		<div class="col-sm-4"></div>
+    		<div class="col-sm-4">
+    		<div th:if="${flash}" class="alert " th:classappend="${type}" th:text="${flashMessage}">
+    		</div>
+        
+        <hr />
+	        <div th:if="${hasErrors}" class="alert alert-danger">	
+	        	<ul>
+	        		<li th:each="errorMessage : ${errorMessages}"><span th:text="${errorMessage}"></span></li>
+	        	</ul>
+	        </div>
+	        <div class="main-login main-center">
+	            <form class="form-horizontal" method="post" th:action="@{/signup}">
+					<input type="hidden" th:value="${user.userId}" name="userId" roleId="userId" />
+	                <div class="form-group">
+	                    <label for="firstName" class="cols-sm-2 control-label">Jméno</label>
+	                    <div class="cols-sm-10">
+	                        <div class="input-group">
+	                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+	                            <input type="text" class="form-control" th:value="${user.firstName}" id="firstName" name="firstName" roleId="firstname"  placeholder="Vyplňte své jméno" required="required"/>
+	                        </div>
+	                    </div>
+	                </div>
+	
+	                <div class="form-group">
+	                    <label for="lastName" class="cols-sm-2 control-label">Příjmení</label>
+	                    <div class="cols-sm-10">
+	                        <div class="input-group">
+	                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+	                            <input type="text" class="form-control" th:value="${user.lastName}" id="lastName" name="lastName" roleId="lastName"  placeholder="Vyplňte své příjmení" required="required"/>
+	                        </div>
+	                    </div>
+	                </div>
+	
+	                <div class="form-group">
+	                    <label for="phone" class="cols-sm-2 control-label">Telefon</label>
+	                    <div class="cols-sm-10">
+	                        <div class="input-group">
+	                            <span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>
+	                            <input type="text" class="form-control" th:value="${user.phone}" id="phone" name="phone" roleId="phone"  placeholder="xxx-xxx-xxx" required="required"/>
+	                        </div>
+	                    </div>
+	                </div>
+	
+	                <div class="form-group">
+	                    <label for="email" class="cols-sm-2 control-label">Email</label><span class="bg-danger pull-right" th:if="${emailExists}">Email je již registrován</span>
+	                    <div class="cols-sm-10">
+	                        <div class="input-group">
+	                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+	                            <input type="text" class="form-control" th:value="${user.email}" id="email" name="email" roleId="email"  placeholder="Vyplňte svou emailovou adresu" required="required"/>
+	                        </div>
+	                    </div>
+	                </div>
+	
+	                <div class="form-group">
+	                    <label for="username" class="cols-sm-2 control-label">Uživatelské jméno</label><span class="bg-danger pull-right" th:if="${usernameExists}">Uživatel s tímto jménem již existuje</span>
+	                    <div class="cols-sm-10">
+	                        <div class="input-group">
+	                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+	                            <input type="text" class="form-control" th:value="${user.username}" id="username" name="username" roleId="username"  placeholder="Enter your Username" required="required"/>
+	                        </div>
+	                    </div>
+	                </div>
+	
+					<div class="form-group">
+	                    <label for="address" class="cols-sm-2 control-label">Adresa</label>
+	                    <div class="cols-sm-10">
+	                        <div class="input-group">
+	                            <span class="input-group-addon"><i class="fa fa-home fa" aria-hidden="true"></i></span>
+	                            <input type="text" class="form-control" th:value="${user.address}" id="address" name="address" roleId="address"  placeholder="Enter your address" required="required"/>
+	                        </div>
+	                    </div>
+	                </div>
+	
+					<div class="form-group">
+	                    <label for="postcode" class="cols-sm-2 control-label">PSČ</label>
+	                    <div class="cols-sm-10">
+	                        <div class="input-group">
+	                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+	                            <input type="text" class="form-control" th:value="${user.postcode}" id="postcode" name="postcode" roleId="postcode"  placeholder="Enter your postcode" required="required"/>
+	                        </div>
+	                    </div>
+	                </div>
+	
+					<div class="form-group">
+	                    <label for="city" class="cols-sm-2 control-label">Město</label>
+	                    <div class="cols-sm-10">
+	                        <div class="input-group">
+	                            <span class="input-group-addon"><i class="fa fa-building fa" aria-hidden="true"></i></span>
+	                            <input type="text" class="form-control" th:value="${user.city}" id="city" name="city" roleId="city"  placeholder="Enter your city" required="required"/>
+	                        </div>
+	                    </div>
+	                </div>
+	
+	                <div class="form-group">
+	                    <label for="password" class="cols-sm-2 control-label">Heslo</label>
+	                    <div class="cols-sm-10">
+	                        <div class="input-group">
+	                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+	                            <input type="password" class="form-control" id="password" name="password" roleId="password"  placeholder="Enter your Password" required="required"/>
+	                        </div>
+	                    </div>
+	                </div>
+	
+	                <div class="form-group">
+	                    <label for="passwordConfirmation" class="cols-sm-2 control-label">Potvrzení heslas</label>
+	                    <div class="cols-sm-10">
+	                        <div class="input-group">
+	                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+	                            <input type="password" class="form-control" id="passwordConfirmation" name="passwordConfirmation" roleId="passwordConfirmation"  placeholder="Confirm your Password" required="required"/>
+	                        </div>
+	                    </div>
+	                </div>
+	
+	                <div class="form-group ">
+	                    <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Registrovat</button>
+	                </div>
+	                
+	                <hr />
+	                
+					<div class="form-group ">
+	                    <a  class="btn btn-info btn-lg btn-block login-button" th:href="@{/}">Zrušit</a>
+	                </div>
+	            </form>
+	        </div>
+	    </div>
+	</div>
+	</div>
+
+    <!-- /.container -->
+    <div th:replace="common/header :: footer-area"/>
+    <div th:replace="common/header :: body-bottom-scripts"/>
+</html>

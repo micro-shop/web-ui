@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/header :: common-header"/>
+<head th:replace="common/header :: navbar" />
+<body>
+<!-- Login Section -->
+    <div class="container">
+        <div class="row ">
+        	<div class="col-sm-4"></div>
+        		<div class="col-sm-4">
+        		<div th:if="${flash}" class="alert " th:classappend="${type}" th:text="${flashMessage}"></div>
+		            <div class="main-center ">
+		                <div class="alert alert-danger" th:if="${param.error}">
+		                    Nesprávne uživatelské jméno nebo heslo.
+		                </div>
+		                <div class="bg-danger" th:if="${param.logout}">
+		                    Byl jste odhlášen.
+		                </div>
+		                <form class="form-signin" th:action="@{/signin}" method="post">
+		                    <h2 class="form-signin-heading">Přihlášení</h2>
+		                    <div class="form-group">
+		                        <label for="username" class="sr-only">Uživatelské jméno</label>
+		                        <input type="text" roleId="username" class="form-control" placeholder="Uživatelské jméno" name="username"
+		                               id="username"
+		                               required="required" autofocus="autofocus"/>
+		                    </div>
+		                    <div class="form-group">
+		                        <label for="password" class="sr-only">Heslo</label>
+		                        <input type="password" roleId="inputPassword" class="form-control" placeholder="Heslo"
+		                               id="password"
+		                               name="password" required="required"/>
+		                    </div>
+		                    <div class="form-group">
+		                        <input type="checkbox" name="remember-me" id="remember-me"/> &nbsp; Zapamatovat
+		                    </div>
+		                    <button class="btn btn-lg btn-primary btn-block" type="submit">Přihlásit se</button>
+		                </form>
+		                
+		                <hr />
+		                
+		                <div class="form-group ">
+		                    <a type="submit" class="btn btn-info btn-lg btn-block login-button" th:href="@{/signup}">Registrovat</a>
+		                    <a th:href="@{/forgotPassword}">Zapomenuté heslo</a>
+		                </div>
+		            </div>
+				</div>
+			<div class="col-sm-4"></div>
+        </div>
+    </div>
+
+<div th:replace="common/header :: body-bottom-scripts"/>
+
+</body>
+</html>
