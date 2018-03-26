@@ -50,7 +50,7 @@ public class ProductController {
 		model.addAttribute("page", page);
 		model.addAttribute("searchTerm", searchTerm);
 		
-		return "home";
+		return "shop";
 	}
 	
 	@RequestMapping(value = "/list/category/{id}", method = RequestMethod.GET)
@@ -63,7 +63,7 @@ public class ProductController {
 		model.addAttribute("showPagination", true);
 		model.addAttribute("products", products);
 		model.addAttribute("page", page);
-		return "home";
+		return "shop";
 	}	
 	
 	private void loadCategories(Model model) {

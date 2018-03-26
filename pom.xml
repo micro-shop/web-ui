@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>webui</name>
-	<description>online shop in spring boot</description>
+	<description>sample web ui</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
