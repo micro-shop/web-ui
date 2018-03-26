@@ -32,6 +32,6 @@ after_success:
   - kubectl config set-cluster default --server=${GKE_SERVER} --insecure-skip-tls-verify=true
   - kubectl config set-context default --cluster=default --user=default
   - kubectl config use-context default
-  #- kubectl rolling-update catalog --image=$IMAGE_VERSION
+  #- kubectl rolling-update webui --image=$IMAGE_VERSION
   - kubectl set image deployment/webui users=$IMAGE_VERSION
-  #- kubectl apply -f ./deployment/catalog-deployment.yml
+  #- kubectl apply -f ./deployment/webui-deployment.yml
