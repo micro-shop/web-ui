@@ -1,37 +1,20 @@
 package cz.microshop.webui.model;
 
 import java.math.BigDecimal;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="cart")
-@Access(AccessType.FIELD)
 public class Cart {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
-	@OneToMany(mappedBy="cart")
-	@OrderBy("id")
-	private Set<LineItem> lineItems;
+
+	private List<LineItem> lineItems;
 	
 	public Cart() {
-		lineItems = new TreeSet<LineItem>();
+		lineItems = new ArrayList<LineItem>();
 	}
 
-	public Cart(Long id, Set<LineItem> lineItems) {
+	public Cart(Long id, List<LineItem> lineItems) {
 		this.id = id;
 		this.lineItems = lineItems;
 	}
@@ -44,11 +27,11 @@ public class Cart {
 		this.id = id;
 	}
 
-	public Set<LineItem> getLineItems() {
+	public List<LineItem> getLineItems() {
 		return lineItems;
 	}
 
-	public void setLineItems(Set<LineItem> lineItems) {
+	public void setLineItems(List<LineItem> lineItems) {
 		this.lineItems = lineItems;
 	}
 
@@ -60,7 +43,7 @@ public class Cart {
 	public BigDecimal totalPrice() {
 		double totalPrice = 0.0;
 		for(LineItem lineItem : lineItems) {
-			totalPrice += (lineItem.getProduct().getPrice().doubleValue() * lineItem.getQuantity());
+			//totalPrice += (lineItem.getProduct().getPrice().doubleValue() * lineItem.getQuantity());
 		}
 		BigDecimal result = new BigDecimal(totalPrice);
 		return result;

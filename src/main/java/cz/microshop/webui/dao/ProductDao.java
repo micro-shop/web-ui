@@ -4,10 +4,9 @@ package cz.microshop.webui.dao;
 import cz.microshop.webui.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface ProductDao extends JpaRepository<Product, Long> {
+public interface ProductDao  { //extends JpaRepository<Product, Long> {
 
 	@Query(value="from Product p WHERE p.category.id = ?1 AND p.quantity > 0", 
 			countQuery="SELECT COUNT(p) FROM Product p WHERE p.category.id = ?1 AND p.quantity > 0", nativeQuery=false)

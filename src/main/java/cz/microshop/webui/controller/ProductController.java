@@ -1,21 +1,17 @@
 package cz.microshop.webui.controller;
 
 
+import cz.microshop.webui.model.Product;
 import cz.microshop.webui.service.CategoryService;
+import cz.microshop.webui.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import cz.microshop.webui.model.Product;
-import cz.microshop.webui.service.ProductService;
+import java.util.List;
 
 @Controller
 @RequestMapping("/product")
@@ -42,7 +38,8 @@ public class ProductController {
 	public String listProducts(Model model, @RequestParam(name="page", defaultValue="0", required=false) Integer page,
 			@RequestParam(name="searchTerm", defaultValue="", required=false) String searchTerm) {
 		Pageable pageable = new PageRequest(page, 6);
-		Page<Product> products = productService.getProductsByTerm(searchTerm, pageable);
+		//Page<Product> products = productService.getProductsByTerm(searchTerm);
+		List<Product> products = productService.getProductsByTerm(searchTerm);
 		loadCategories(model);
 		
 		model.addAttribute("showPagination", true);
@@ -57,7 +54,8 @@ public class ProductController {
 	public String loadProductsByCategory(@PathVariable("id") Integer id, Model model, 
 			@RequestParam(name="page", defaultValue="0", required=false) Integer page) {
 		Pageable pageable = new PageRequest(page, 6);
-		Page<Product> products = productService.getProductsByCategoryId(id, pageable);
+
+		List<Product> products = productService.getProductsByCategoryId(id);
 		
 		loadCategories(model);
 		model.addAttribute("showPagination", true);

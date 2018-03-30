@@ -1,66 +1,73 @@
 package cz.microshop.webui.service;
 
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
+import cz.microshop.webui.model.Cart;
+import cz.microshop.webui.model.Item;
+import cz.microshop.webui.model.LineItem;
+import cz.microshop.webui.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cz.microshop.webui.dao.CartDao;
-import cz.microshop.webui.dao.LineItemDao;
-import cz.microshop.webui.dao.ProductDao;
-import cz.microshop.webui.model.Cart;
-import cz.microshop.webui.model.LineItem;
-import cz.microshop.webui.model.Product;
+import javax.transaction.Transactional;
 
 @Service
 public class CartServiceImpl implements CartService {
 
-	@Autowired
+/*	@Autowired
 	private CartDao cartDao;
 	
 	@Autowired
 	private LineItemDao lineItemDao;
 	
 	@Autowired
-	private ProductDao productDao;
+	private ProductDao productDao;*/
+
+	@Autowired
+	private CartRestService cartRestService;
+	@Autowired
+	private ProductService productService;
 	
 	@Override
 	@Transactional
 	public Cart addItemToCart(Long cartId, Long productId) {
-		Product product = productDao.findOne(productId);
-		Cart cart = cartId == null ? this.createCart() : cartDao.findOne(cartId);
+		//Product product = productDao.findOne(productId);
+		Product product = productService.findById(productId);
+		Cart cart = cartId == null ? this.createCart() : cartRestService.find(cartId);
 		if (product.getQuantity() <= 0L) {
 			return cart;
 		}
-		
-		Optional<LineItem> lineItemOptional = lineItemDao.findByProductIdAndCartId(productId, cartId);
+		Item i = new Item();
+		i.setProductId(productId);
+		i.setQuantity(1L);
+		i.setUnitPrice(product.getPrice());
+
+		return cartRestService.addItemToCart(cartId, i);
+/*		Optional<LineItem> lineItemOptional = lineItemDao.findByProductIdAndCartId(productId, cartId);
 		LineItem lineItem = null;
 		try {
 			lineItem = lineItemOptional.get();
 			lineItem.setQuantity(lineItem.getQuantity() + 1L);
 			lineItemDao.save(lineItem);
 		} catch (NoSuchElementException e) {
-			lineItem = lineItemDao.save(new LineItem(product, cart, 1L));
+			lineItem = lineItemDao.save(new LineItem(productId, product.getPrice(), 1L));
 		}
 		
 		cart.getLineItems().add(lineItem);
-		return cartDao.save(cart);
+		return cartDao.save(cart);*/
 	}
 	
 	@Override
 	@Transactional
 	public Cart createCart() {
 		Cart cart = new Cart();
-		return cartDao.save(cart);
+		return cartRestService.save(cart);
+/*		Cart cart = new Cart();
+		return cartDao.save(cart);*/
 	}
 
 	@Override
 	@Transactional
 	public Cart findCart(Long cartId) {
-		return cartDao.findOne(cartId);
+		return cartRestService.find(cartId);
 	}
 
 	@Override
@@ -68,42 +75,52 @@ public class CartServiceImpl implements CartService {
 	public Cart updateProductQuantity(Long cartId, Long[] productIds, Long[] quantities) {
 		
 		int i = 0;
+		Cart cart = cartRestService.find(cartId);
 		for(Long productId : productIds) {
-			LineItem lineItem = lineItemDao.findByProductIdAndCartId(productId, cartId).get();
-			Product product = lineItem.getProduct();
-			if((product.getQuantity() <= 0L) || (quantities[i] <= 0L)) {
-				lineItemDao.delete(lineItem);
+			LineItem lineItem = cart.getLineItems().stream().filter(li -> li.getProductId().equals(productId)).findFirst().orElse(null);
+			//LineItem lineItem = lineItemDao.findByProductIdAndCartId(productId, cartId).get();
+			//Product product = lineItem.getProduct();
+			//if((product.getQuantity() <= 0L) || (quantities[i] <= 0L)) {
+			if((quantities[i] <= 0L)) {
+				cart.getLineItems().remove(lineItem);
+				//lineItemDao.delete(lineItem);
 			} else {
-				updateLineItemQuantity(quantities[i], lineItem, product);
+				lineItem.setQuantity(quantities[i]);
+				//updateLineItemQuantity(quantities[i], lineItem, product);
 			}
 			i++;
 		}
+		cartRestService.save(cart);
 		return findCart(cartId);
 	}
 
 	@Override
 	@Transactional
 	public void removeItemFromCart(Long id) {
+		cartRestService.removeItem(id);
+		/*find(cartId);
 		LineItem lineItem = lineItemDao.findOne(id);
-		lineItemDao.delete(lineItem);
+		lineItemDao.delete(lineItem);*/
 	}
 
 	@Override
 	@Transactional
 	public void destroyCart(Long cartId) {
-		cartDao.delete(this.clearCart(cartId));
+		cartRestService.delete(cartId);
+		//cartDao.delete(this.clearCart(cartId));
 	}
 
 	@Override
 	@Transactional
 	public Cart clearCart(Long cartId) {
-		
+		return cartRestService.clear(cartId);
+		/*
 		Cart cart = cartDao.findOne(cartId);
 		cart.getLineItems().forEach(lineItem -> {
 			lineItemDao.delete(lineItem);
 		});
 		cart.getLineItems().clear();
-		return cart;
+		return cart;*/
 	}
 	
 	private void updateLineItemQuantity(Long quantity, LineItem lineItem, Product product) {

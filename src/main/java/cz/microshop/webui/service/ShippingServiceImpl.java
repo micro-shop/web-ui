@@ -1,31 +1,31 @@
 package cz.microshop.webui.service;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
-
+import cz.microshop.webui.model.Shipping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cz.microshop.webui.dao.ShippingDao;
-import cz.microshop.webui.model.Shipping;
+import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class ShippingServiceImpl implements ShippingService {
+/*
+	@Autowired
+	private ShippingDao shippingDao;*/
 
 	@Autowired
-	private ShippingDao shippingDao;
+	private ShippingRestService shippingRestService;
 	
 	@Override
 	@Transactional
 	public List<Shipping> findAllShippings() {
-		return shippingDao.findAll();
+		return shippingRestService.findAll();
 	}
 
 	@Override
 	@Transactional
 	public Shipping findByName(String shippingName) {
-		return shippingDao.findByName(shippingName);
+		return shippingRestService.find(shippingName);
 	}
 
 }

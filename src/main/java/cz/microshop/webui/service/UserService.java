@@ -1,10 +1,10 @@
 package cz.microshop.webui.service;
 
-import java.util.List;
-import java.util.Set;
-
 import cz.microshop.webui.model.User;
 import cz.microshop.webui.security.UserRole;
+
+import java.util.List;
+import java.util.Set;
 
 
 public interface UserService {
@@ -16,11 +16,11 @@ public interface UserService {
 
     boolean checkEmailExists(String email);
     
-    void save (User user);
+    void save (User User);
     
-    User createUser(User user, Set<UserRole> userRoles);
+    User createUser(User User, Set<UserRole> userRoles);
     
-    User saveUser (User user); 
+    User saveUser (User User);
     
     List<User> findUserList();
 
@@ -30,9 +30,9 @@ public interface UserService {
 
 	boolean checkPhoneNumberExists(String phone);
 
-	void createPasswordResetTokenForUser(User user, String token);
+	void createPasswordResetTokenForUser(User User, String token);
 	
-	public void updateUserPassword(User user);
+	public void updateUserPassword(User User);
 
-	void checkEqualityOfPasswords(User user, List<String> errorMessages);
+	void checkEqualityOfPasswords(User User, List<String> errorMessages);
 }

@@ -1,6 +1,5 @@
 package cz.microshop.webui.controller;
 
-import cz.microshop.webui.dao.RoleDao;
 import cz.microshop.webui.helpers.FlashMessage;
 import cz.microshop.webui.model.Product;
 import cz.microshop.webui.model.User;
@@ -27,8 +26,8 @@ import java.util.Set;
 @Controller
 public class HomeController {	
 	
-	@Autowired
-	private RoleDao roleDao;
+	/*@Autowired
+	private RoleDao roleDao;*/
 	
     @Autowired
     private UserService userService;
@@ -62,21 +61,21 @@ public class HomeController {
 	
 	@RequestMapping(value="/signup", method = RequestMethod.GET)
 	public String signup(Model model) {		
-		User user = new User();
-		model.addAttribute("user", user);
+		User user2 = new User();
+		model.addAttribute("user2", user2);
 		return "singup";
 	}	
 	
 	@RequestMapping(value="/signup", method = RequestMethod.POST)
-	public String signupPost(@Valid @ModelAttribute("user") User user, BindingResult bindingResult ,
-			Model model, RedirectAttributes redirectAttributes) {
+	public String signupPost(@Valid @ModelAttribute("user2") User user2, BindingResult bindingResult ,
+							 Model model, RedirectAttributes redirectAttributes) {
 		
 		List<String> errorMessages = new ArrayList<>();
 		User signedIn = userService.findByUsername(SecurityContextHolder.getContext()
                 .getAuthentication().getName());
 		
-		validateUniqueValues(user, errorMessages, signedIn);
-		userService.checkEqualityOfPasswords(user, errorMessages);
+		validateUniqueValues(user2, errorMessages, signedIn);
+		userService.checkEqualityOfPasswords(user2, errorMessages);
 		checkOtherValidationErrors(bindingResult, errorMessages);
 		
 		if (errorMessages.size() > 0) {
@@ -85,9 +84,9 @@ public class HomeController {
 		} 
 		
 		if(signedIn == null) {
-			saveNewUserWithStandardRole(user);
+			saveNewUserWithStandardRole(user2);
 		} else {
-			updateExistingUser(user, signedIn);
+			updateExistingUser(user2, signedIn);
 		}
 		FlashMessage.createFlashMessage("alert-success", "Signed up successfully", redirectAttributes);
 		return "redirect:/";
@@ -98,39 +97,41 @@ public class HomeController {
 		model.addAttribute("errorMessages", errorMessages);
 	}
 
-	private void saveNewUserWithStandardRole(User user) {
+	private void saveNewUserWithStandardRole(User user2) {
 		Set<UserRole> userRoles = new HashSet<>();
-		userRoles.add(new UserRole(user, roleDao.findByName("ROLE_USER")));
-		userService.createUser(user, userRoles);
+		UserRole userRole = new UserRole();
+		userRole.setName("ROLE_USER");
+		userRoles.add(userRole);
+		userService.createUser(user2, userRoles);
 	}
 
-	private void updateExistingUser(User user, User signedIn) {
-		userService.updateUserPassword(user);
-		userService.save(user);
-		signedIn.setUsername(user.getUsername());
+	private void updateExistingUser(User user2, User signedIn) {
+		userService.updateUserPassword(user2);
+		userService.save(user2);
+		signedIn.setUsername(user2.getUsername());
 	}
 
-	private void validateUniqueValues(User user, List<String> errorMessages, User signedIn) {
+	private void validateUniqueValues(User user2, List<String> errorMessages, User signedIn) {
 		if(signedIn == null) {
-			validateUniqueValuesForNewUser(user, errorMessages);
+			validateUniqueValuesForNewUser(user2, errorMessages);
 		} else {
-			validateUniqueValuesForExistingUser(user, errorMessages, signedIn);
+			validateUniqueValuesForExistingUser(user2, errorMessages, signedIn);
 		}
 	}
 
-	private void validateUniqueValuesForExistingUser(User user, List<String> errorMessages, User signedIn) {
-		if(!user.getUsername().equals(signedIn.getUsername()))
-			checkExistenceOfUsername(user, errorMessages);
-		if(!user.getEmail().equals(signedIn.getEmail()))
-			checkExistenceOfEmail(user, errorMessages);
-		if(!user.getPhone().equals(signedIn.getPhone()))
-			checkExistenceOfPhoneNumber(user, errorMessages);
+	private void validateUniqueValuesForExistingUser(User user2, List<String> errorMessages, User signedIn) {
+		if(!user2.getUsername().equals(signedIn.getUsername()))
+			checkExistenceOfUsername(user2, errorMessages);
+		if(!user2.getEmail().equals(signedIn.getEmail()))
+			checkExistenceOfEmail(user2, errorMessages);
+		if(!user2.getPhone().equals(signedIn.getPhone()))
+			checkExistenceOfPhoneNumber(user2, errorMessages);
 	}
 
-	private void validateUniqueValuesForNewUser(User user, List<String> errorMessages) {
-		checkExistenceOfEmail(user, errorMessages);
-		checkExistenceOfUsername(user, errorMessages);
-		checkExistenceOfPhoneNumber(user, errorMessages);
+	private void validateUniqueValuesForNewUser(User user2, List<String> errorMessages) {
+		checkExistenceOfEmail(user2, errorMessages);
+		checkExistenceOfUsername(user2, errorMessages);
+		checkExistenceOfPhoneNumber(user2, errorMessages);
 	}
 
 	private void checkOtherValidationErrors(BindingResult bindingResult, List<String> errorMessages) {
@@ -141,20 +142,20 @@ public class HomeController {
 		}
 	}
 
-	private void checkExistenceOfPhoneNumber(User user, List<String> errorMessages) {
-		if(userService.checkPhoneNumberExists(user.getPhone())) {
+	private void checkExistenceOfPhoneNumber(User user2, List<String> errorMessages) {
+		if(userService.checkPhoneNumberExists(user2.getPhone())) {
 			errorMessages.add("Phone number exists in database.");
 		}
 	}
 
-	private void checkExistenceOfUsername(User user, List<String> errorMessages) {
-		if (userService.checkUsernameExists(user.getUsername())) {
+	private void checkExistenceOfUsername(User user2, List<String> errorMessages) {
+		if (userService.checkUsernameExists(user2.getUsername())) {
 			errorMessages.add("Username exists in database.");
 		}
 	}
 
-	private void checkExistenceOfEmail(User user, List<String> errorMessages) {
-		if (userService.checkEmailExists(user.getEmail())) {
+	private void checkExistenceOfEmail(User user2, List<String> errorMessages) {
+		if (userService.checkEmailExists(user2.getEmail())) {
 			errorMessages.add("Email exists in database.");
 		}
 	}

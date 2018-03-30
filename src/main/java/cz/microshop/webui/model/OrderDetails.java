@@ -1,42 +1,23 @@
 package cz.microshop.webui.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.Min;
-
-@Entity
-@Table(name="order_details")
 public class OrderDetails {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="product_id")
-	private Product product;
+	/*@OneToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="product_id")*/
+	private Long productId;
 	
-	@ManyToOne
-	@JoinColumn(name="order_id")
+	/*@ManyToOne
+	@JoinColumn(name="order_id")*/
 	private Order order;
-	
-	@Column(name="quantity", nullable=false)
-	@Min(value=1)
 	private Long quantity;
 	
 	public OrderDetails() {}
 
 	public OrderDetails(Product product, Order order, Long quantity) {
 		super();
-		this.product = product;
+		//this.product = product;
 		this.order = order;
 		this.quantity = quantity;
 	}
@@ -50,11 +31,11 @@ public class OrderDetails {
 	}
 
 	public Product getProduct() {
-		return product;
+		return null;
 	}
 
 	public void setProduct(Product product) {
-		this.product = product;
+		//this.product = product;
 	}
 
 	public Order getOrder() {
@@ -75,6 +56,7 @@ public class OrderDetails {
 
 	@Override
 	public String toString() {
-		return "OrderDetails [id=" + id + ", product=" + product + ", order=" + order + ", quantity=" + quantity + "]";
+		//return "OrderDetails [id=" + id + ", product=" + product + ", order=" + order + ", quantity=" + quantity + "]";
+		return"";
 	}
 }

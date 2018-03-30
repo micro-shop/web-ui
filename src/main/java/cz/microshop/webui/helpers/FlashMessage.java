@@ -20,7 +20,7 @@ public class FlashMessage {
 		redirectAttributes.addFlashAttribute("flashMessage", message);
 	}
 	
-	public static String createOrderContentsMessage(Order order, User user) {
+	public static String createOrderContentsMessage(Order order, User user2) {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("<html>");
 		stringBuilder.append("<head>");
@@ -41,7 +41,7 @@ public class FlashMessage {
 		stringBuilder.append("</head>");
 		stringBuilder.append("<body>");
 		stringBuilder.append("<p>");
-		stringBuilder.append("Hello " + user.getFirstName() + " " + user.getLastName() + "(" + user.getUsername() + ").");
+		stringBuilder.append("Hello " + user2.getFirstName() + " " + user2.getLastName() + "(" + user2.getUsername() + ").");
 		stringBuilder.append("Thank you for purchasing products in our web shop. Here is list with bought products:");
 		stringBuilder.append("</p>");
 		stringBuilder.append("<table>");

@@ -2,49 +2,14 @@ package cz.microshop.webui.model;
 
 import java.math.BigDecimal;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
-
-import org.hibernate.annotations.Type;
-
-@Entity
-@Table(name="product")
 public class Product {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(name="name", nullable=false)
 	private String name;
-	
-	@Column(name="description", nullable=false)
-	@Type(type="text")
 	private String description;
-	
-	@Column(name="quantity", nullable=false)
-	@Min(value=0L)
 	private Long quantity;
-	
-	@Column(name="price", nullable=false)
-	@Digits(integer = 10, fraction = 2)
 	private BigDecimal price;
-	
-	@ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="category_id")
 	private Category category;
-	
-	@Column(name="product_image_url")
 	private String productImageUrl;
 
 	public Product(String name, String description, Long quantity, BigDecimal price, Category category,

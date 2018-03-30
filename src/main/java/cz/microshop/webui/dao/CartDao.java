@@ -1,9 +1,5 @@
 package cz.microshop.webui.dao;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import cz.microshop.webui.model.Cart;
-
-public interface CartDao extends JpaRepository<Cart, Long> {
+public interface CartDao { // extends {// extends JpaRepository<Cart, Long> {
 
 }

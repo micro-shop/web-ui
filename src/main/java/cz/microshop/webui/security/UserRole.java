@@ -1,31 +1,18 @@
 package cz.microshop.webui.security;
 
 
-import javax.persistence.*;
-
-import cz.microshop.webui.model.User;
-
-@Entity
-@Table(name="user_role")
 public class UserRole {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private long userRoleId;
-
-    public UserRole(User user, Role role) {
-        this.user = user;
-        this.role = role;
-    }
-
-
-    @ManyToOne(fetch = FetchType.EAGER)
+    private String name;
+    /*@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private User user;
+    private User2 user2;*/
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
-    private Role role;
+    /*@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")*/
+    //private Role role;
 
     public UserRole() {}
 
@@ -37,12 +24,20 @@ public class UserRole {
         this.userRoleId = userRoleId;
     }
 
-    public User getUser() {
-        return user;
+    public String getName() {
+        return name;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /*public User2 getUser2() {
+        return user2;
+    }
+
+    public void setUser2(User2 user2) {
+        this.user2 = user2;
     }
 
     public Role getRole() {
@@ -51,5 +46,5 @@ public class UserRole {
 
     public void setRole(Role role) {
         this.role = role;
-    }
+    }*/
 }

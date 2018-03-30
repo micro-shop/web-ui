@@ -59,21 +59,21 @@ public class UserController {
 			@RequestParam("newPasswordConfirmation") String newPasswordConfirmation, Model model, 
 			RedirectAttributes redirectAttributes) {
 		
-	    User user = 
+	    User user2 =
 	      userService.findByUsername((String)SecurityContextHolder.getContext()
 	                                  .getAuthentication().getName());
 	    List<String> errorMessages = new ArrayList<>();
-	    user.setPassword(newPassword);
-	    user.setPasswordConfirmation(newPasswordConfirmation);
-	    userService.checkEqualityOfPasswords(user, errorMessages);
-	    checkPasswordCorrectness(user, errorMessages);
+	    user2.setPassword(newPassword);
+	    //user2.setPasswordConfirmation(newPasswordConfirmation);
+	    userService.checkEqualityOfPasswords(user2, errorMessages);
+	    checkPasswordCorrectness(user2, errorMessages);
 	    if(errorMessages.size() > 0) {
 	    	model.addAttribute("hasErrors", true);
 	    	model.addAttribute("errorMessages", errorMessages);
 	    	return "updatePassword";
 	    }
 	    FlashMessage.createFlashMessage("alert-success", "Your password has been updated.", redirectAttributes);
-	    userService.updateUserPassword(user);
+	    userService.updateUserPassword(user2);
 	    return "redirect:/";
 	}	
 
@@ -98,9 +98,9 @@ public class UserController {
 	@RequestMapping(value="/update")
 	public String updateUser(Model model) {
 		
-		User user = userService.findByUsername(SecurityContextHolder.getContext()
+		User user2 = userService.findByUsername(SecurityContextHolder.getContext()
                 .getAuthentication().getName());
-		model.addAttribute("user", user);
+		model.addAttribute("user2", user2);
 		return "singup";
 	}
 	
@@ -108,39 +108,39 @@ public class UserController {
 	public String resetPassword(HttpServletRequest request, @RequestParam("email") String userEmail,
 			RedirectAttributes redirectAttributes) {
 		
-		User user = userService.findByEmail(userEmail);
-		if (user == null) {
+		User user2 = userService.findByEmail(userEmail);
+		if (user2 == null) {
 			return "redirect:/";
 		}
 		String token = UUID.randomUUID().toString();
-		userService.createPasswordResetTokenForUser(user, token);
+		userService.createPasswordResetTokenForUser(user2, token);
 		mailSender.send(constructResetTokenEmail(request.getRequestURI(), 
-				request.getLocale(), token, user));
+				request.getLocale(), token, user2));
 		FlashMessage.createFlashMessage("alert-success", "Your password has been changed. Check your email inbox"
 				+ " for further instructions", redirectAttributes);
 		return "redirect:/signin";
 	}
 	
-	private SimpleMailMessage constructResetTokenEmail(String contextPath, Locale locale, String token, User user) {
+	private SimpleMailMessage constructResetTokenEmail(String contextPath, Locale locale, String token, User user2) {
 		
-		String url = contextPath + "/user/changePassword?id=" + 
-				user.getUserId() + "&token=" + token;
-		return constructEmail("Reset Password", "Hi. To reset your password, follow the link above" + " \r\n" + url, user);
+		String url = contextPath + "/user/changePassword?id=" +
+				user2.getId() + "&token=" + token;
+		return constructEmail("Reset Password", "Hi. To reset your password, follow the link above" + " \r\n" + url, user2);
 	}
 	
-	private SimpleMailMessage constructEmail(String subject, String body, User user) {
+	private SimpleMailMessage constructEmail(String subject, String body, User user2) {
 		
 		SimpleMailMessage email = new SimpleMailMessage();
 		email.setSubject(subject);
 		email.setText(body);
-		email.setTo(user.getEmail());
+		email.setTo(user2.getEmail());
 		email.setFrom("ciprojektwimiip@gmail.com"); //TODO: UPDATE LATER
 		return email;
 	}
 	
-	private void checkPasswordCorrectness(User user, List<String> errorMessages) {
+	private void checkPasswordCorrectness(User user2, List<String> errorMessages) {
 		
-		if(!validatePassword(user.getPassword()) || !validatePassword(user.getPasswordConfirmation())) {
+		if(!validatePassword(user2.getPassword())) {//  || !validatePassword(user2.getPasswordConfirmation())) {
 			errorMessages.add("One of the passwords is invalid. It should contain at least one: digit, "
 			+ "upper, lower case letter, special character and its length should be in range from 6 to 60 chars");
 		}		

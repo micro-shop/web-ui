@@ -1,11 +1,10 @@
 package cz.microshop.webui.dao;
 
-import cz.microshop.webui.model.User;
-import org.springframework.data.repository.CrudRepository;
+import cz.microshop.webui.model.User2;
 
 
-public interface UserDao extends CrudRepository<User, Long> {
-	User findByUsername(String username);
-	User findByEmail(String email);
-	User findByPhone(String phone);
+public interface UserDao { //extends  CrudRepository<User2, Long> {
+	User2 findByUsername(String username);
+	User2 findByEmail(String email);
+	User2 findByPhone(String phone);
 }

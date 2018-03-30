@@ -1,43 +1,26 @@
 package cz.microshop.webui.security;
 
+import cz.microshop.webui.model.User;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-
-import cz.microshop.webui.model.User;
-
-@Entity
 public class PasswordResetToken {
   
-    public PasswordResetToken(String token, User user) {
+    public PasswordResetToken(String token, User user2) {
     	this.token = token;
-    	this.user = user;
+    	this.user2 = user2;
     	this.expiryDate = Date.from(Instant.now().plus(Duration.ofDays(1)));
 	}
 
 	private static final int EXPIRATION = 60 * 24;
-  
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long id;
-  
-    @Column(name="token")
+
     private String token;
-  
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "user_id")
-    private User user;
-  
-    @Column(name="expiry_date")
+
+    private User user2;
     private Date expiryDate;
 
     public PasswordResetToken() {}
@@ -59,11 +42,11 @@ public class PasswordResetToken {
 	}
 
 	public User getUser() {
-		return user;
+		return user2;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUser(User user2) {
+		this.user2 = user2;
 	}
 
 	public Date getExpiryDate() {

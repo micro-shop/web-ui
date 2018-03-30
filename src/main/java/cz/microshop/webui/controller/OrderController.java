@@ -1,21 +1,15 @@
 package cz.microshop.webui.controller;
 
-import java.io.UnsupportedEncodingException;
-
-import javax.mail.Message.RecipientType;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
-
 import cz.microshop.webui.helpers.FlashMessage;
+import cz.microshop.webui.model.Cart;
 import cz.microshop.webui.model.Order;
+import cz.microshop.webui.model.Shipping;
 import cz.microshop.webui.model.User;
 import cz.microshop.webui.service.CartService;
+import cz.microshop.webui.service.OrderService;
 import cz.microshop.webui.service.ShippingService;
+import cz.microshop.webui.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -26,10 +20,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import cz.microshop.webui.model.Cart;
-import cz.microshop.webui.model.Shipping;
-import cz.microshop.webui.service.OrderService;
-import cz.microshop.webui.service.UserService;
+import javax.mail.Message.RecipientType;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/order")
@@ -63,11 +61,11 @@ public class OrderController {
 	public String checkout(Model model, HttpServletRequest httpRequest, @RequestParam("shipping") String shippingName) {
 		Shipping shipping = shippingService.findByName(shippingName);
 		Cart cart = cartService.findCart((Long)httpRequest.getSession().getAttribute("cart_id"));
-		User user = userService.findByUsername(SecurityContextHolder.getContext()
+		User user2 = userService.findByUsername(SecurityContextHolder.getContext()
                 .getAuthentication().getName());
-		Order order = orderService.placeOrder(cart, shipping, user);
+		Order order = orderService.placeOrder(cart, shipping, user2);
 		FlashMessage.createFlashMessage("info", "Your order has been placed successfully.", model);
-		sendEmailMessageWithOrderList(order, user);
+		sendEmailMessageWithOrderList(order, user2);
 		httpRequest.getSession().setAttribute("cartQuantity", cart.getLineItems().size());
 		model.addAttribute("order", order);
 		return "order_summary";
@@ -76,22 +74,22 @@ public class OrderController {
 	@RequestMapping(value = "/my_orders", method = RequestMethod.GET)
 	public String showMyOrders(Model model, @RequestParam(name="page", defaultValue="0", required=false) Integer page) {
 		Pageable pageable = new PageRequest(page, 5);
-		User user = userService.findByUsername(SecurityContextHolder.getContext()
+		User user2 = userService.findByUsername(SecurityContextHolder.getContext()
                 .getAuthentication().getName());
-		Page<Order> orders = orderService.userOrders(user.getUserId(), pageable);
+		List<Order> orders = orderService.userOrders(user2.getId());
 		model.addAttribute("orders", orders);
 		model.addAttribute("page", page);
 		return "my_orders";
 	}
 	
-	private void sendEmailMessageWithOrderList(Order order, User user) {
-		String mailContent = FlashMessage.createOrderContentsMessage(order, user);
+	private void sendEmailMessageWithOrderList(Order order, User user2) {
+		String mailContent = FlashMessage.createOrderContentsMessage(order, user2);
 		Session session = null;
 		MimeMessage mimeMessage = new MimeMessage(session);
 		
 		try {
 			mimeMessage.setSubject("Online Shop. Purchase id: " + order.getId());
-			mimeMessage.setRecipient(RecipientType.TO, new InternetAddress(user.getEmail(), "user"));
+			mimeMessage.setRecipient(RecipientType.TO, new InternetAddress(user2.getEmail(), "user2"));
 			mimeMessage.setContent(mailContent, "text/html");
 			mimeMessage.setFrom("ciprojektwimiip@gmail.com"); //TODO: UPDATE LATER
 		} catch (MessagingException e) {
