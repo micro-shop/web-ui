@@ -29,7 +29,7 @@ public class ProductRestService {
 
     public List<Product> getProductsByTerm(String searchTerm)   {
         ResponseEntity<List<Product>> resp =
-                restTemplate.exchange("http://localhost:8090/product/find?searchTerm="+searchTerm,
+                restTemplate.exchange("http://localhost:8090/product/findByTerm?searchTerm="+searchTerm,
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<Product>>() {
                         });
         List<Product> products = resp.getBody();

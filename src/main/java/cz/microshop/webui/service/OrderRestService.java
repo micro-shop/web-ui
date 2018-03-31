@@ -4,7 +4,6 @@ import cz.microshop.webui.model.Cart;
 import cz.microshop.webui.model.Item;
 import cz.microshop.webui.model.Order;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -51,7 +50,7 @@ public class OrderRestService {
         return restTemplate.getForObject("http://localhost:8090/cart/" + id + "/clear", Cart.class);
     }
 
-    public Page<Order> findByUserId(Long userId) {
+    public List<Order> findByUserId(Long userId) {
 /*        ResponseEntity<List<Order>> resp =
                 restTemplate.exchange("http://localhost:8090/product/find?",
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<Order>>() {

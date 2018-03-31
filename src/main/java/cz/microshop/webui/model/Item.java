@@ -4,19 +4,11 @@ import java.math.BigDecimal;
 
 public class Item {
 
-    private Long id;
+    private Long itemId;
     private Long productId;
     private BigDecimal unitPrice;
     private Long quantity;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    private String productName;
 
     public BigDecimal getUnitPrice() {
         return unitPrice;
@@ -40,5 +32,21 @@ public class Item {
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public Long getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Long itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 }

@@ -2,7 +2,6 @@ package cz.microshop.webui.service;
 
 import cz.microshop.webui.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +10,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Date;
 import java.time.Instant;
+import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -56,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public Page<Order> userOrders(Long userId, Pageable pageable) {
+	public List<Order> userOrders(Long userId, Pageable pageable) {
 		return null;
 	}
 
@@ -95,7 +95,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Transactional
 	@Override
-	public Page<Order> userOrders(Long userId) {
+	public List<Order> userOrders(Long userId) {
 		return orderRestService.findByUserId(userId);
 	}
 }

@@ -37,9 +37,12 @@ public class CartServiceImpl implements CartService {
 		}
 		Item i = new Item();
 		i.setProductId(productId);
+		i.setProductName(product.getName());
 		i.setQuantity(1L);
 		i.setUnitPrice(product.getPrice());
 
+		/*cart.getItems().add(i);
+		return save(cart);*/
 		return cartRestService.addItemToCart(cartId, i);
 /*		Optional<LineItem> lineItemOptional = lineItemDao.findByProductIdAndCartId(productId, cartId);
 		LineItem lineItem = null;
@@ -77,15 +80,15 @@ public class CartServiceImpl implements CartService {
 		int i = 0;
 		Cart cart = cartRestService.find(cartId);
 		for(Long productId : productIds) {
-			LineItem lineItem = cart.getLineItems().stream().filter(li -> li.getProductId().equals(productId)).findFirst().orElse(null);
+			Item item = cart.getItems().stream().filter(li -> li.getProductId().equals(productId)).findFirst().orElse(null);
 			//LineItem lineItem = lineItemDao.findByProductIdAndCartId(productId, cartId).get();
 			//Product product = lineItem.getProduct();
 			//if((product.getQuantity() <= 0L) || (quantities[i] <= 0L)) {
 			if((quantities[i] <= 0L)) {
-				cart.getLineItems().remove(lineItem);
+				cart.getItems().remove(item);
 				//lineItemDao.delete(lineItem);
 			} else {
-				lineItem.setQuantity(quantities[i]);
+				item.setQuantity(quantities[i]);
 				//updateLineItemQuantity(quantities[i], lineItem, product);
 			}
 			i++;
@@ -96,8 +99,8 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	@Transactional
-	public void removeItemFromCart(Long id) {
-		cartRestService.removeItem(id);
+	public void removeItemFromCart(Long cartId, Long itemId) {
+		cartRestService.removeItem(cartId, itemId);
 		/*find(cartId);
 		LineItem lineItem = lineItemDao.findOne(id);
 		lineItemDao.delete(lineItem);*/
@@ -108,6 +111,11 @@ public class CartServiceImpl implements CartService {
 	public void destroyCart(Long cartId) {
 		cartRestService.delete(cartId);
 		//cartDao.delete(this.clearCart(cartId));
+	}
+
+	@Override
+	public Cart save(Cart cart) {
+		return cartRestService.save(cart);
 	}
 
 	@Override

@@ -1,11 +1,5 @@
 package cz.microshop.webui.controller;
 
-import java.math.RoundingMode;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import cz.microshop.webui.model.Cart;
 import cz.microshop.webui.model.Shipping;
 import cz.microshop.webui.service.CartService;
@@ -17,6 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+import java.math.RoundingMode;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/cart")
@@ -35,7 +34,7 @@ public class CartController {
 			return "shoppingCart";
 		}
 		Cart cart = cartService.findCart(cartIdInSession);
-		if(cart == null || (cart.getLineItems().size() <= 0L)) {
+		if(cart == null || (cart.getItems().size() <= 0L)) {
 			return "redirect:/";
 		}
 		model.addAttribute("cart", cart);
@@ -54,18 +53,18 @@ public class CartController {
 		}
 		Cart cart = cartService.updateProductQuantity(cartId, productIds, quantity);
 		
-		httpRequest.getSession().setAttribute("cartQuantity", cart.getLineItems().size());
+		httpRequest.getSession().setAttribute("cartQuantity", cart.getItems().size());
 		model.addAttribute("cart", cart);
 		model.addAttribute("totalPrice", cart.totalPrice().setScale(2, RoundingMode.HALF_UP));
 		return "shoppingCart";
 	}
 
 	@RequestMapping(value="removeItem/{id}", method=RequestMethod.GET)
-	public String removeItemFromCart(Model model, HttpServletRequest httpRequest, @PathVariable("id") Long id) {
+	public String removeItemFromCart(Model model, HttpServletRequest httpRequest, @PathVariable("id") Long itemId) {
 		Cart cart = cartService.findCart(findCartIdInSession(httpRequest));
-		if((cart != null) && (id != null)) {
-			cartService.removeItemFromCart(id);
-			httpRequest.getSession().setAttribute("cartQuantity", cart.getLineItems().size());
+		if((cart != null) && (itemId != null)) {
+			cartService.removeItemFromCart(cart.getCartId(), itemId);
+			httpRequest.getSession().setAttribute("cartQuantity", cart.getItems().size());
 		}		
 		return "redirect:/cart/show";
 	}
@@ -76,7 +75,7 @@ public class CartController {
 		if(cartId != null) {
 			cartService.clearCart(cartId);
 		}
-		return "redirect:/product/list";
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value = "/add_to_cart", method = RequestMethod.POST)
@@ -85,15 +84,15 @@ public class CartController {
 		Cart cart = null;
 		if(httpRequest.getSession().getAttribute("cart_id") == null) {
 			cart = cartService.createCart();
-			httpRequest.getSession().setAttribute("cart_id", cart.getId());
+			httpRequest.getSession().setAttribute("cart_id", cart.getCartId());
 		} else {
 			cart = cartService.findCart(findCartIdInSession(httpRequest));
 		}
-		
+
 		if(id != null) {
-			cart = cartService.addItemToCart(cart.getId(), id);
+			cart = cartService.addItemToCart(cart.getCartId(), id);
 		}
-		httpRequest.getSession().setAttribute("cartQuantity", cart.getLineItems().size());
+		httpRequest.getSession().setAttribute("cartQuantity", cart.getItems().size());
 		return "redirect:/cart/show";
 	}
 	

@@ -22,24 +22,24 @@
 		                    </tr>
 		                </thead>
 		                <tbody>
-		                    <tr th:each="lineItem : ${cart.lineItems}">
-		                    	<td><a class="thumbnail pull-left" th:href="@{/product/show/{id}(id=${lineItem.product.id})}"> 
-		                    	<img class="media-object" th:src="${lineItem.product.productImageUrl}" style="width: 72px; height: 72px;"/> </a></td>
+		                    <tr th:each="lineItem : ${cart.items}">
+		                    	<!--<td><a class="thumbnail pull-left" th:href="@{/product/show/{id}(id=${lineItem.productId})}">
+		                    	<img class="media-object" th:src="${lineItem.product.productImageUrl}" style="width: 72px; height: 72px;"/> </a></td>-->
 		                        <td class="col-sm-8 col-md-6">
 		                        <div class="media">
 		                            <div class="media-body">
-		                                <h4 class="media-heading"><a th:href="@{/product/show/{id}(id=${lineItem.product.id})}" th:text="${lineItem.product.name}">Product name</a></h4>
+		                                <h4 class="media-heading"><a th:href="@{/product/show/{id}(id=${lineItem.productId})}" th:text="${lineItem.productName}">Product name</a></h4>
 		                                <span>Stav: </span><span class="text-success"><strong>Dostupné skladem</strong></span>
 		                            </div>
 		                        </div></td>
 		                        <td class="col-sm-1 col-md-1" style="text-align: center">
-		                        	<input type="hidden" name="product_ids[]" th:attr="value=${lineItem.product.id}" />
-		                        	<input type="number" min="1" class="form-control" th:attr="name=quantity[], value=${lineItem.quantity}, max=${lineItem.product.quantity}" />
+		                        	<input type="hidden" name="product_ids[]" th:attr="value=${lineItem.productId}" />
+		                        	<input type="number" min="1" class="form-control" th:attr="name=quantity[], value=${lineItem.quantity}, max=20"/><!--${lineItem.quantity}" />-->
 		                        </td>
-		                        <td class="col-sm-1 col-md-1 text-center"><strong th:text="${#strings.concat(lineItem.product.price, '$')}"></strong></td>
-		                        <td class="col-sm-1 col-md-1 text-center"><strong th:text="${#strings.concat(lineItem.product.price * lineItem.quantity, '$')}"></strong></td>
+		                        <td class="col-sm-1 col-md-1 text-center"><strong th:text="${#strings.concat(lineItem.unitPrice, '$')}"></strong></td>
+		                        <td class="col-sm-1 col-md-1 text-center"><strong th:text="${#strings.concat(lineItem.unitPrice * lineItem.quantity, '$')}"></strong></td>
 		                        <td class="col-sm-1 col-md-1">
-		                        <a th:href="@{/cart/removeItem/{id}(id=${lineItem.id})}" class="btn btn-danger">
+		                        <a th:href="@{/cart/removeItem/{id}(id=${lineItem.itemId})}" class="btn btn-danger">
 		                            <i class="fa fa-ban" aria-hidden="true"></i> Odebrat
 		                        </a></td>
 		                    </tr>
