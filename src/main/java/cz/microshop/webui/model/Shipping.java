@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 
 public class Shipping {
 
-	Long id;
+	private Long shippingId;
 
 	private String name;
 
@@ -37,5 +37,13 @@ public class Shipping {
 	@Override
 	public String toString() {
 		return "Shipping [name=" + name + ", price=" + price + "]";
+	}
+
+	public Long getShippingId() {
+		return shippingId;
+	}
+
+	public void setShippingId(Long shippingId) {
+		this.shippingId = shippingId;
 	}
 }

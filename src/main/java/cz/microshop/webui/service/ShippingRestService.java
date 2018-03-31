@@ -19,7 +19,7 @@ public class ShippingRestService {
 
     public List<Shipping> findAll()  {
         ResponseEntity<List<Shipping>> shippingResponse =
-                restTemplate.exchange("http://localhost:8090/user/findAll",
+                restTemplate.exchange("http://localhost:8095/shipping/findAll",
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<Shipping>>() {
                         });
         List<Shipping> shippings = shippingResponse.getBody();
@@ -27,6 +27,6 @@ public class ShippingRestService {
     }
 
     public Shipping find(String name)   {
-        return restTemplate.getForObject("http://localhost:8090/user/find?name="+name, Shipping.class);
+        return restTemplate.getForObject("http://localhost:8095/shipping/find?name="+name, Shipping.class);
     }
 }

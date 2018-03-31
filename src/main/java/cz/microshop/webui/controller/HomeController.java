@@ -62,12 +62,12 @@ public class HomeController {
 	@RequestMapping(value="/signup", method = RequestMethod.GET)
 	public String signup(Model model) {		
 		User user2 = new User();
-		model.addAttribute("user2", user2);
+		model.addAttribute("user", user2);
 		return "singup";
 	}	
 	
 	@RequestMapping(value="/signup", method = RequestMethod.POST)
-	public String signupPost(@Valid @ModelAttribute("user2") User user2, BindingResult bindingResult ,
+	public String signupPost(@Valid @ModelAttribute("user") User user2, BindingResult bindingResult ,
 							 Model model, RedirectAttributes redirectAttributes) {
 		
 		List<String> errorMessages = new ArrayList<>();

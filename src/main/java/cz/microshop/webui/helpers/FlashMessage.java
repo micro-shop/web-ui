@@ -1,7 +1,6 @@
 package cz.microshop.webui.helpers;
 
 import cz.microshop.webui.model.Order;
-import cz.microshop.webui.model.OrderDetails;
 import cz.microshop.webui.model.User;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -50,7 +49,7 @@ public class FlashMessage {
 		stringBuilder.append("<th>Quantity</th>");
 		stringBuilder.append("<th>Price</th>");
 		stringBuilder.append("</tr>");
-		for(OrderDetails orderDetails : order.getOrderDetails()) {
+		/*for(OrderItem orderDetails : order.getOrderDetails()) {
 			stringBuilder.append("<tr>");
 			stringBuilder.append("<td>" + orderDetails.getProduct().getName() + "</td>");
 			stringBuilder.append("<td>" + orderDetails.getQuantity() + "</td>");
@@ -58,7 +57,7 @@ public class FlashMessage {
 			stringBuilder.append("</tr>");
 		}
 		stringBuilder.append("<tr>");
-		stringBuilder.append("<td colspan=\"2\">Shipping: " + order.getShipping().getPrice().toString() + "$</td>");
+		stringBuilder.append("<td colspan=\"2\">Shipping: " + order.getShipping().getPrice().toString() + "$</td>");*/
 		
 		stringBuilder.append("<td>Total: " + order.getTotalWithShipping().toString() + "$</td>");
 		stringBuilder.append("</tr>");

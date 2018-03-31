@@ -56,14 +56,6 @@ public class User implements UserDetails {
         this.firstName = firstName;
     }
 
-    public Long getId() {
-        return userId;
-    }
-
-    public void setId(Long id) {
-        this.userId = id;
-    }
-
     public String getLastName() {
         return lastName;
     }
@@ -141,5 +133,13 @@ public class User implements UserDetails {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

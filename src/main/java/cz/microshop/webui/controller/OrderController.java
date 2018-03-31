@@ -20,13 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.mail.Message.RecipientType;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Controller
@@ -61,12 +55,13 @@ public class OrderController {
 	public String checkout(Model model, HttpServletRequest httpRequest, @RequestParam("shipping") String shippingName) {
 		Shipping shipping = shippingService.findByName(shippingName);
 		Cart cart = cartService.findCart((Long)httpRequest.getSession().getAttribute("cart_id"));
-		User user2 = userService.findByUsername(SecurityContextHolder.getContext()
+		User user = userService.findByUsername(SecurityContextHolder.getContext()
                 .getAuthentication().getName());
-		Order order = orderService.placeOrder(cart, shipping, user2);
+		Order order = orderService.placeOrder(cart, shipping, user);
 		FlashMessage.createFlashMessage("info", "Your order has been placed successfully.", model);
-		sendEmailMessageWithOrderList(order, user2);
+		sendEmailMessageWithOrderList(order, user);
 		httpRequest.getSession().setAttribute("cartQuantity", cart.getItems().size());
+		model.addAttribute("user", user);
 		model.addAttribute("order", order);
 		return "order_summary";
 	}
@@ -74,22 +69,23 @@ public class OrderController {
 	@RequestMapping(value = "/my_orders", method = RequestMethod.GET)
 	public String showMyOrders(Model model, @RequestParam(name="page", defaultValue="0", required=false) Integer page) {
 		Pageable pageable = new PageRequest(page, 5);
-		User user2 = userService.findByUsername(SecurityContextHolder.getContext()
+		User user = userService.findByUsername(SecurityContextHolder.getContext()
                 .getAuthentication().getName());
-		List<Order> orders = orderService.userOrders(user2.getId());
+		List<Order> orders = orderService.userOrders(user.getUserId());
+		model.addAttribute("user", user);
 		model.addAttribute("orders", orders);
 		model.addAttribute("page", page);
 		return "my_orders";
 	}
 	
-	private void sendEmailMessageWithOrderList(Order order, User user2) {
-		String mailContent = FlashMessage.createOrderContentsMessage(order, user2);
+	private void sendEmailMessageWithOrderList(Order order, User user) {
+		/*String mailContent = FlashMessage.createOrderContentsMessage(order, user);
 		Session session = null;
 		MimeMessage mimeMessage = new MimeMessage(session);
 		
 		try {
 			mimeMessage.setSubject("Online Shop. Purchase id: " + order.getId());
-			mimeMessage.setRecipient(RecipientType.TO, new InternetAddress(user2.getEmail(), "user2"));
+			mimeMessage.setRecipient(RecipientType.TO, new InternetAddress(user.getEmail(), "user"));
 			mimeMessage.setContent(mailContent, "text/html");
 			mimeMessage.setFrom("ciprojektwimiip@gmail.com"); //TODO: UPDATE LATER
 		} catch (MessagingException e) {
@@ -98,6 +94,6 @@ public class OrderController {
 			e.printStackTrace();
 		}
 		
-		mailSender.send(mimeMessage);
+		mailSender.send(mimeMessage);*/
 	}
 }

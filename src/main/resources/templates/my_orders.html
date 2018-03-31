@@ -20,15 +20,15 @@
 					      		<th>Množství</th>
 					      		<th>Cena za kus</th>
 							</tr>
-					      	<tr th:each="details : ${order.orderDetails}">
-					      		<td th:text="${details.product.name}"></td>
+					      	<tr th:each="details : ${order.orderItems}">
+					      		<!--<td th:text="${details.productName}"></td>-->
 					      		<td th:text="${details.quantity}"></td>
-					      		<td th:text="${#strings.concat(details.product.price, ' Kč')}"></td>
+					      		<td th:text="${#strings.concat(details.unitPrice, ' Kč')}"></td>
 					      	</tr>
 					      	<tr>
 					      		<th>Cena dopravy</th>
 					      		<td>&nbsp;</td>
-					      		<th th:text="${#strings.concat(order.shipping.price, ' Kč')}"></th>
+					      		<!--<th th:text="${#strings.concat(order.shipping.price, ' Kč')}"></th>-->
 					      	</tr>
 					      </table>
 					    </div>
@@ -37,15 +37,15 @@
 					</div>
 					<br />
 					<br /><br />
-					<span th:if="${page gt 0}" class="previous">
+					<!--<span th:if="${page gt 0}" class="previous">
             			<a  th:href="@{/order/my_orders(page=${page - 1})}"
             			class="btn btn-warning btn-sm float-left" th:text="Previous"></a>
             		</span>
             	
-            		<span th:if="${orders.getNumberOfElements() gt 0}">
+            		<span th:if="${#lists.size(orders) gt 0}">
             			<a th:href="@{/order/my_orders(page=${page + 1})}"
             			class="btn btn-warning btn-sm float-right" th:text="Next"></a>
-            		</span>
+            		</span>-->
         	</div>        		
        </div>
       

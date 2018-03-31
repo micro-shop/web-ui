@@ -3,16 +3,16 @@ package cz.microshop.webui.model;
 public class OrderDetails {
 
 	private Long id;
-	
+
 	/*@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="product_id")*/
 	private Long productId;
-	
+
 	/*@ManyToOne
 	@JoinColumn(name="order_id")*/
 	private Order order;
 	private Long quantity;
-	
+
 	public OrderDetails() {}
 
 	public OrderDetails(Product product, Order order, Long quantity) {
