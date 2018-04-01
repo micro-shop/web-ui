@@ -9,9 +9,6 @@ import java.util.List;
 
 @Service
 public class ShippingServiceImpl implements ShippingService {
-/*
-	@Autowired
-	private ShippingDao shippingDao;*/
 
 	@Autowired
 	private ShippingRestService shippingRestService;

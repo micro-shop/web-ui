@@ -1,14 +1,8 @@
 package cz.microshop.webui.controller;
 
 import cz.microshop.webui.helpers.FlashMessage;
-import cz.microshop.webui.model.Cart;
-import cz.microshop.webui.model.Order;
-import cz.microshop.webui.model.Shipping;
-import cz.microshop.webui.model.User;
-import cz.microshop.webui.service.CartService;
-import cz.microshop.webui.service.OrderService;
-import cz.microshop.webui.service.ShippingService;
-import cz.microshop.webui.service.UserService;
+import cz.microshop.webui.model.*;
+import cz.microshop.webui.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -38,19 +32,31 @@ public class OrderController {
 	
 	@Autowired
 	private ShippingService shippingService;
+
+	@Autowired
+	private PaymentService paymentService;
 	
 	@Autowired
 	private JavaMailSender mailSender;
 	
-	/*@RequestMapping(value="/hook", method=RequestMethod.POST)
-	public String paypalHook(Model model, HttpServletRequest httpRequest) {
-		
-		httpRequest.getParameterMap().forEach((key, value) -> {
-			System.out.println("Key: " + key + " values: " + Arrays.toString(value));
-		});
+	@RequestMapping(value="/processPayment", method=RequestMethod.POST)
+	public String paypalHook(Model model, @RequestParam("orderId") Long orderId) {
+		System.out.println("PAYMENT SUCCESS FOR " + orderId);
+		User user = userService.findByUsername(SecurityContextHolder.getContext()
+				.getAuthentication().getName());
+		Payment payment = new Payment();
+		payment.setOrderId(orderId);
+		payment.setUserId(user.getUserId());
+		paymentService.process(payment);
 		return "thankyou";
-	}*/
-	
+	}
+
+	@RequestMapping(value="/payment", method=RequestMethod.POST)
+	public String payment(Model model, HttpServletRequest httpRequest, @RequestParam("orderId") Long orderId) {
+		model.addAttribute("orderId", orderId);
+		return "payment";
+	}
+
 	@RequestMapping(value="/checkout", method=RequestMethod.POST)
 	public String checkout(Model model, HttpServletRequest httpRequest, @RequestParam("shipping") String shippingName) {
 		Shipping shipping = shippingService.findByName(shippingName);
