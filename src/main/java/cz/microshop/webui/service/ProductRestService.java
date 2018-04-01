@@ -1,6 +1,7 @@
 package cz.microshop.webui.service;
 
 import cz.microshop.webui.model.Product;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +13,14 @@ import java.util.List;
 @Service
 public class ProductRestService {
 
+    @Value("${url.restserviceurl.product}")
+    private String url;
+
     RestTemplate restTemplate = new RestTemplate();
 
     public List<Product> findAll()  {
         ResponseEntity<List<Product>> resp =
-                restTemplate.exchange("http://localhost:8090/product/findAll",
+                restTemplate.exchange(url+"/findAll",
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<Product>>() {
                         });
         List<Product> products = resp.getBody();
