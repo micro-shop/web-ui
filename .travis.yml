@@ -30,8 +30,8 @@ after_success:
 
   - kubectl config set-credentials default --username=${GKE_USERNAME} --password=${GKE_PASSWORD}
   - kubectl config set-cluster default --server=${GKE_SERVER} --insecure-skip-tls-verify=true
-  - kubectl config set-context default --cluster=default --user2=default
+  - kubectl config set-context default --cluster=default --user=default
   - kubectl config use-context default
   #- kubectl rolling-update webui --image=$IMAGE_VERSION
-  - kubectl set image deployment/webui users=$IMAGE_VERSION
+  - kubectl set image deployment/webui webui=$IMAGE_VERSION
   #- kubectl apply -f ./deployment/webui-deployment.yml
