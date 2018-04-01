@@ -1,11 +1,11 @@
 package cz.microshop.webui.service;
 
 import cz.microshop.webui.model.Shipping;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -13,13 +13,14 @@ import java.util.List;
  * Created by xnovm on 28.03.2018.
  */
 @Service
-public class ShippingRestService {
+public class ShippingRestService extends RestService {
 
-    RestTemplate restTemplate = new RestTemplate();
+    @Value("${url.restserviceurl.shipping}")
+    private String url;
 
     public List<Shipping> findAll()  {
         ResponseEntity<List<Shipping>> shippingResponse =
-                restTemplate.exchange("http://localhost:8095/shipping/findAll",
+                getRestTemplate().exchange(url+"/findAll",
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<Shipping>>() {
                         });
         List<Shipping> shippings = shippingResponse.getBody();
@@ -27,6 +28,6 @@ public class ShippingRestService {
     }
 
     public Shipping find(String name)   {
-        return restTemplate.getForObject("http://localhost:8095/shipping/find?name="+name, Shipping.class);
+        return getRestTemplate().getForObject(url+"/find?name="+name, Shipping.class);
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -15,25 +14,23 @@ import java.util.List;
  * Created by xnovm on 28.03.2018.
  */
 @Service
-public class UserRestService {
+public class UserRestService extends RestService {
 
     @Value("${url.restserviceurl.users}")
     private String url;
 
-    RestTemplate restTemplate = new RestTemplate();
-
     public User save(User user)   {
-        User user1 = restTemplate.postForObject(url+"/save", user, User.class);
+        User user1 = getRestTemplate().postForObject(url+"/save", user, User.class);
         return user1;
     }
 
     public void deleteAll()   {
-        restTemplate.getForObject(url+"/deleteAll", HttpStatus.class);
+        getRestTemplate().getForObject(url+"/deleteAll", HttpStatus.class);
     }
 
     public List<User> findAll()  {
         ResponseEntity<List<User>> usersResponse =
-                restTemplate.exchange(url+"/findAll",
+                getRestTemplate().exchange(url+"/findAll",
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {
                         });
         List<User> users = usersResponse.getBody();
@@ -41,7 +38,7 @@ public class UserRestService {
     }
 
     public User find(String username)   {
-        return restTemplate.getForObject(url+"/find?username="+username, User.class);
+        return getRestTemplate().getForObject(url+"/find?username="+username, User.class);
     }
 
     /*public ResponseEntity<ArrayList<User>> create(@RequestBody ArrayList<User> userList)   {
