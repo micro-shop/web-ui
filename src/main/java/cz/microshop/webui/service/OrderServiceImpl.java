@@ -2,10 +2,8 @@ package cz.microshop.webui.service;
 
 import cz.microshop.webui.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Instant;
@@ -40,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
 	private OrderRestService orderRestService;
 	
 	@Override
-	@Transactional
+	//@Transactional
 	public Order placeOrder(Cart cart, Shipping shipping, User user) {
 		Order order = new Order();
 		order.setCreatedAt(Date.from(Instant.now()));
@@ -56,18 +54,13 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	@Transactional
+	//@Transactional
 	public BigDecimal totalOrderPriceWithShipping(Order order) {
 		//return new BigDecimal(order.getgetShipping().getPrice().doubleValue() + order.getTotal().doubleValue());
 		return order.getTotalWithShipping();
 	}
 
-	@Override
-	public List<Order> userOrders(Long userId, Pageable pageable) {
-		return null;
-	}
-
-	@Transactional
+	//@Transactional
 	private void setOrderedProducts(Cart cart, Order order) {
 		double totalPrice = 0.0;
 		for(Item cartItem : cart.getItems()) {
@@ -103,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setTotal(total.setScale(2, RoundingMode.HALF_UP));
 	}
 
-	@Transactional
+	//@Transactional
 	@Override
 	public List<Order> userOrders(Long userId) {
 		return orderRestService.findByUserId(userId);

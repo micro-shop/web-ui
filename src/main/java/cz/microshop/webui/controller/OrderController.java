@@ -4,8 +4,6 @@ import cz.microshop.webui.helpers.FlashMessage;
 import cz.microshop.webui.model.*;
 import cz.microshop.webui.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -74,7 +72,7 @@ public class OrderController {
 	
 	@RequestMapping(value = "/my_orders", method = RequestMethod.GET)
 	public String showMyOrders(Model model, @RequestParam(name="page", defaultValue="0", required=false) Integer page) {
-		Pageable pageable = new PageRequest(page, 5);
+		//Pageable pageable = new PageRequest(page, 5);
 		User user = userService.findByUsername(SecurityContextHolder.getContext()
                 .getAuthentication().getName());
 		List<Order> orders = orderService.userOrders(user.getUserId());

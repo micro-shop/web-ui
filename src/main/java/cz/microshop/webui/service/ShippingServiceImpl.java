@@ -4,7 +4,6 @@ import cz.microshop.webui.model.Shipping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -14,13 +13,13 @@ public class ShippingServiceImpl implements ShippingService {
 	private ShippingRestService shippingRestService;
 	
 	@Override
-	@Transactional
+	//@Transactional
 	public List<Shipping> findAllShippings() {
 		return shippingRestService.findAll();
 	}
 
 	@Override
-	@Transactional
+	//@Transactional
 	public Shipping findByName(String shippingName) {
 		return shippingRestService.find(shippingName);
 	}

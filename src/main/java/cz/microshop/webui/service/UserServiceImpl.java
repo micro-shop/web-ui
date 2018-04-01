@@ -8,14 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
 
 
 @Service
-@Transactional
+//@Transactional
 public class UserServiceImpl implements UserService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
@@ -35,7 +34,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRestService userRestService;
 	
-    @Transactional
+   // @Transactional
 	public void save(User user2) {
         User u = new User();
         //u.setId(user2.getUserId());
@@ -44,25 +43,25 @@ public class UserServiceImpl implements UserService {
         userRestService.save(u);
     }
 
-    @Transactional
+    //@Transactional
 	public void updateUserPassword(User user2) {
 		String encryptedPassword = passwordEncoder.encode(user2.getPassword());
 		user2.setPassword(encryptedPassword);
         userRestService.save(user2);
 	}
 	
-    @Transactional
+    //@Transactional
     public User findByUsername(String username) {
         return userRestService.find(username);
     }
 
-    @Transactional
+    //@Transactional
     public User findByEmail(String email) {
         return null;
         //return userRestService.findByEmail(email);
     }
         
-    @Transactional
+   // @Transactional
     public User createUser(User user2, Set<UserRole> userRoles) {
         //User localUser = map(userRestService.find(user2.getUsername()));
         User localUser = userRestService.find(user2.getUsername());
@@ -87,7 +86,7 @@ public class UserServiceImpl implements UserService {
         return localUser;
     }
 
-    @Transactional
+    //@Transactional
     public boolean checkUsernameExists(String username) {
         if (null != findByUsername(username)) {
             return true;
@@ -96,7 +95,7 @@ public class UserServiceImpl implements UserService {
         return false;
     }
     
-    @Transactional
+    //@Transactional
     public boolean checkEmailExists(String email) {
         if (null != findByEmail(email)) {
             return true;
@@ -105,7 +104,7 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-    @Transactional
+    //@Transactional
     public User saveUser (User user2) {
         return userRestService.save(user2);
     }
@@ -114,14 +113,14 @@ public class UserServiceImpl implements UserService {
         return (List<User>) (userRestService.findAll());
     }
 
-    @Transactional
+    //@Transactional
     public void enableUser (String username) {
         User user2 = findByUsername(username);
         user2.setEnabled(true);
         userRestService.save(user2);
     }
 
-    @Transactional
+   // @Transactional
     public void disableUser (String username) {
         User user2 = findByUsername(username);
         user2.setEnabled(false);
@@ -131,7 +130,7 @@ public class UserServiceImpl implements UserService {
     }
 
 	@Override
-	@Transactional
+	//@Transactional
 	public boolean checkPhoneNumberExists(String phone) {
 		if (null != findByPhone(phone)) {
 			return true;
@@ -139,13 +138,13 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 
-	@Transactional
+	//@Transactional
 	public User findByPhone(String phone) {
         return null;
 		//return userRestService.findByPhone(phone);
 	}
 	
-	@Transactional
+	//@Transactional
 	public void createPasswordResetTokenForUser(User user2, String token) {
 	    PasswordResetToken myToken = new PasswordResetToken(token, user2);
 	    //passwordTokenDao.save(myToken);

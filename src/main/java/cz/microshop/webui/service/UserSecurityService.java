@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -27,7 +26,7 @@ public class UserSecurityService implements UserDetailsService {
 	private PasswordTokenDao passwordResetTokenDao;*/
 
     @Override
-    @Transactional
+    //@Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user2 = userRestService.find(username);
         if (null == user2) {
@@ -37,7 +36,7 @@ public class UserSecurityService implements UserDetailsService {
         return user2;
     }
     
-    @Transactional
+   // @Transactional
     public String validatePasswordResetToken(long id, String token) {
   /*      PasswordResetToken passToken =
           passwordResetTokenDao.findByToken(token);

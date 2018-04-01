@@ -7,8 +7,6 @@ import cz.microshop.webui.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-
 @Service
 public class CartServiceImpl implements CartService {
 
@@ -27,7 +25,7 @@ public class CartServiceImpl implements CartService {
 	private ProductService productService;
 	
 	@Override
-	@Transactional
+	//@Transactional
 	public Cart addItemToCart(Long cartId, Long productId) {
 		//Product product = productDao.findOne(productId);
 		Product product = productService.findById(productId);
@@ -59,7 +57,7 @@ public class CartServiceImpl implements CartService {
 	}
 	
 	@Override
-	@Transactional
+	//@Transactional
 	public Cart createCart() {
 		Cart cart = new Cart();
 		return cartRestService.save(cart);
@@ -68,13 +66,13 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	@Transactional
+	//@Transactional
 	public Cart findCart(Long cartId) {
 		return cartRestService.find(cartId);
 	}
 
 	@Override
-	@Transactional
+	//@Transactional
 	public Cart updateProductQuantity(Long cartId, Long[] productIds, Long[] quantities) {
 		
 		int i = 0;
@@ -98,7 +96,7 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	@Transactional
+	//@Transactional
 	public void removeItemFromCart(Long cartId, Long itemId) {
 		cartRestService.removeItem(cartId, itemId);
 		/*find(cartId);
@@ -107,7 +105,7 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	@Transactional
+	//@Transactional
 	public void destroyCart(Long cartId) {
 		cartRestService.delete(cartId);
 		//cartDao.delete(this.clearCart(cartId));
@@ -119,7 +117,7 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	@Transactional
+	//@Transactional
 	public Cart clearCart(Long cartId) {
 		return cartRestService.clear(cartId);
 		/*

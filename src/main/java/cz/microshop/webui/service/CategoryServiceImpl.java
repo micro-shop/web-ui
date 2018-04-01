@@ -4,7 +4,6 @@ import cz.microshop.webui.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -16,7 +15,7 @@ public class CategoryServiceImpl implements CategoryService {
 	private CategoryRestService categoryRestService;
 
 	@Override
-	@Transactional
+	//@Transactional
 	public List<Category> getCategories() {
 		return categoryRestService.findAll();
 	}

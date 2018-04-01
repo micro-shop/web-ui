@@ -1,6 +1,5 @@
 package cz.microshop.webui.model;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +17,7 @@ public class Order {
 
 	private List<OrderItem> orderItems;
 
-	@Transient
+	//@Transient
 	private BigDecimal totalWithShipping;
 
 	public BigDecimal getTotal() {

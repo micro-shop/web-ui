@@ -6,7 +6,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.util.Collection;
 import java.util.HashSet;
@@ -29,7 +28,7 @@ public class User2 implements UserDetails{
 /*    @Column(name="password")*/
     private String password;
     
-    @Transient
+    //@Transient
     //@Pattern(regexp="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{6,60}", message="Password confirmation is invalid. It should contain at least one: digit, "
 	//		+ "upper, lower case letter, special character and its length should be in range from 6 to 60 chars")
     private String passwordConfirmation;
