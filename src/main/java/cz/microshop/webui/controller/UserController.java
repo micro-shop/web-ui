@@ -6,7 +6,6 @@ import cz.microshop.webui.service.UserSecurityService;
 import cz.microshop.webui.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
@@ -27,9 +26,9 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-
+/*
 	@Autowired
-	private JavaMailSender mailSender;
+	private JavaMailSender mailSender;*/
     
     @Autowired
     private UserDetailsService securityService;
@@ -114,8 +113,8 @@ public class UserController {
 		}
 		String token = UUID.randomUUID().toString();
 		userService.createPasswordResetTokenForUser(user, token);
-		mailSender.send(constructResetTokenEmail(request.getRequestURI(), 
-				request.getLocale(), token, user));
+		//mailSender.send(constructResetTokenEmail(request.getRequestURI(),
+		//		request.getLocale(), token, user));
 		FlashMessage.createFlashMessage("alert-success", "Your password has been changed. Check your email inbox"
 				+ " for further instructions", redirectAttributes);
 		return "redirect:/signin";

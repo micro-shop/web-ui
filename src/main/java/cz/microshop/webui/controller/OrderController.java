@@ -4,7 +4,6 @@ import cz.microshop.webui.helpers.FlashMessage;
 import cz.microshop.webui.model.*;
 import cz.microshop.webui.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,10 +32,12 @@ public class OrderController {
 
 	@Autowired
 	private PaymentService paymentService;
-	
+/*
+
 	@Autowired
 	private JavaMailSender mailSender;
-	
+*/
+
 	@RequestMapping(value="/processPayment", method=RequestMethod.POST)
 	public String paypalHook(Model model, @RequestParam("orderId") Long orderId) {
 		System.out.println("PAYMENT SUCCESS FOR " + orderId);
