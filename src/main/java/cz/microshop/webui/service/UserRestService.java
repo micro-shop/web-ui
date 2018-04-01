@@ -1,6 +1,7 @@
 package cz.microshop.webui.service;
 
 import cz.microshop.webui.model.User;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -16,20 +17,23 @@ import java.util.List;
 @Service
 public class UserRestService {
 
+    @Value("${url.restserviceurl.users}")
+    private String url;
+
     RestTemplate restTemplate = new RestTemplate();
 
     public User save(User user)   {
-        User user1 = restTemplate.postForObject("http://localhost:8092/user/save", user, User.class);
+        User user1 = restTemplate.postForObject(url+"/save", user, User.class);
         return user1;
     }
 
     public void deleteAll()   {
-        restTemplate.getForObject("http://localhost:8092/user/deleteAll", HttpStatus.class);
+        restTemplate.getForObject(url+"/deleteAll", HttpStatus.class);
     }
 
     public List<User> findAll()  {
         ResponseEntity<List<User>> usersResponse =
-                restTemplate.exchange("http://localhost:8092/user/findAll",
+                restTemplate.exchange(url+"/findAll",
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {
                         });
         List<User> users = usersResponse.getBody();
@@ -37,7 +41,7 @@ public class UserRestService {
     }
 
     public User find(String username)   {
-        return restTemplate.getForObject("http://localhost:8092/user/find?username="+username, User.class);
+        return restTemplate.getForObject(url+"/find?username="+username, User.class);
     }
 
     /*public ResponseEntity<ArrayList<User>> create(@RequestBody ArrayList<User> userList)   {
