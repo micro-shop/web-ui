@@ -270,8 +270,8 @@ z-index: 999;}
 	transition: all 0.45s ease;
 }
 .block-slider img{
-	width: 100%;
-	height: auto;
+	width: auto;
+	height: 200px;
 }
 .block-slider .bx-prev{
 	left: 0px;
@@ -762,7 +762,10 @@ width: 10px;
   margin: 10px 0 0;
 }
 
-.product-big-title-area {background: url(/img/crossword.png) repeat scroll 0 0 #5a88ca}
+.product-big-title-area {
+  background: url(/img/crossword.png) repeat scroll 0 0 #5a88ca;
+  margin-top: 50px;
+}
 
 .product-bit-title h2 {
   font-family: raleway;
@@ -1208,4 +1211,8 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
 
 .page {
   clear: both;
+}
+
+.bx-wrapper, .bx-viewport {
+    height: 200px !important; //provide height of slider
 }
