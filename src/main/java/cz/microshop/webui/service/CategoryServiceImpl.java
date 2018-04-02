@@ -8,14 +8,11 @@ import java.util.List;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-/*
-	@Autowired
-	private CategoryDao categoryDao;*/
+
 	@Autowired
 	private CategoryRestService categoryRestService;
 
 	@Override
-	//@Transactional
 	public List<Category> getCategories() {
 		return categoryRestService.findAll();
 	}

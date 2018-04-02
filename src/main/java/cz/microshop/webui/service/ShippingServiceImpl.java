@@ -13,13 +13,11 @@ public class ShippingServiceImpl implements ShippingService {
 	private ShippingRestService shippingRestService;
 	
 	@Override
-	//@Transactional
 	public List<Shipping> findAllShippings() {
 		return shippingRestService.findAll();
 	}
 
 	@Override
-	//@Transactional
 	public Shipping findByName(String shippingName) {
 		return shippingRestService.find(shippingName);
 	}

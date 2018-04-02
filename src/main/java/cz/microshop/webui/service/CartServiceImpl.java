@@ -10,24 +10,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class CartServiceImpl implements CartService {
 
-/*	@Autowired
-	private CartDao cartDao;
-	
-	@Autowired
-	private LineItemDao lineItemDao;
-	
-	@Autowired
-	private ProductDao productDao;*/
-
 	@Autowired
 	private CartRestService cartRestService;
 	@Autowired
 	private ProductService productService;
 	
 	@Override
-	//@Transactional
 	public Cart addItemToCart(Long cartId, Long productId) {
-		//Product product = productDao.findOne(productId);
 		Product product = productService.findById(productId);
 		Cart cart = cartId == null ? this.createCart() : cartRestService.find(cartId);
 		if (product.getQuantity() <= 0L) {
@@ -39,40 +28,21 @@ public class CartServiceImpl implements CartService {
 		i.setQuantity(1L);
 		i.setUnitPrice(product.getPrice());
 
-		/*cart.getItems().add(i);
-		return save(cart);*/
 		return cartRestService.addItemToCart(cartId, i);
-/*		Optional<LineItem> lineItemOptional = lineItemDao.findByProductIdAndCartId(productId, cartId);
-		LineItem lineItem = null;
-		try {
-			lineItem = lineItemOptional.get();
-			lineItem.setQuantity(lineItem.getQuantity() + 1L);
-			lineItemDao.save(lineItem);
-		} catch (NoSuchElementException e) {
-			lineItem = lineItemDao.save(new LineItem(productId, product.getPrice(), 1L));
-		}
-		
-		cart.getLineItems().add(lineItem);
-		return cartDao.save(cart);*/
 	}
 	
 	@Override
-	//@Transactional
 	public Cart createCart() {
 		Cart cart = new Cart();
 		return cartRestService.save(cart);
-/*		Cart cart = new Cart();
-		return cartDao.save(cart);*/
 	}
 
 	@Override
-	//@Transactional
 	public Cart findCart(Long cartId) {
 		return cartRestService.find(cartId);
 	}
 
 	@Override
-	//@Transactional
 	public Cart updateProductQuantity(Long cartId, Long[] productIds, Long[] quantities) {
 		
 		int i = 0;
@@ -96,19 +66,13 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	//@Transactional
 	public void removeItemFromCart(Long cartId, Long itemId) {
 		cartRestService.removeItem(cartId, itemId);
-		/*find(cartId);
-		LineItem lineItem = lineItemDao.findOne(id);
-		lineItemDao.delete(lineItem);*/
 	}
 
 	@Override
-	//@Transactional
 	public void destroyCart(Long cartId) {
 		cartRestService.delete(cartId);
-		//cartDao.delete(this.clearCart(cartId));
 	}
 
 	@Override
@@ -117,16 +81,8 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	//@Transactional
 	public Cart clearCart(Long cartId) {
 		return cartRestService.clear(cartId);
-		/*
-		Cart cart = cartDao.findOne(cartId);
-		cart.getLineItems().forEach(lineItem -> {
-			lineItemDao.delete(lineItem);
-		});
-		cart.getLineItems().clear();
-		return cart;*/
 	}
 	
 	private void updateLineItemQuantity(Long quantity, LineItem lineItem, Product product) {

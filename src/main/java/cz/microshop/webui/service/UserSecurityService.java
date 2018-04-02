@@ -16,9 +16,6 @@ public class UserSecurityService implements UserDetailsService {
     /** The application logger */
     private static final Logger LOG = LoggerFactory.getLogger(UserSecurityService.class);
 
-/*    @Autowired
-    private UserDao userDao;*/
-
     @Autowired
     private UserRestService userRestService;
 
@@ -26,7 +23,6 @@ public class UserSecurityService implements UserDetailsService {
 	private PasswordTokenDao passwordResetTokenDao;*/
 
     @Override
-    //@Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user2 = userRestService.find(username);
         if (null == user2) {
@@ -35,8 +31,7 @@ public class UserSecurityService implements UserDetailsService {
         }
         return user2;
     }
-    
-   // @Transactional
+
     public String validatePasswordResetToken(long id, String token) {
   /*      PasswordResetToken passToken =
           passwordResetTokenDao.findByToken(token);

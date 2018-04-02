@@ -24,10 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
-public class HomeController {	
-	
-	/*@Autowired
-	private RoleDao roleDao;*/
+public class HomeController {
 	
     @Autowired
     private UserService userService;
