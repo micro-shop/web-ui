@@ -25,12 +25,12 @@ public class ProductRestService extends RestService {
     }
 
     public Product find(Long id)   {
-        return getRestTemplate().getForObject("http://localhost:8090/product/find?id="+id, Product.class);
+        return getRestTemplate().getForObject(url+"/find?id="+id, Product.class);
     }
 
     public List<Product> getProductsByTerm(String searchTerm)   {
         ResponseEntity<List<Product>> resp =
-                getRestTemplate().exchange("http://localhost:8090/product/findByTerm?searchTerm="+searchTerm,
+                getRestTemplate().exchange(url+"/findByTerm?searchTerm="+searchTerm,
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<Product>>() {
                         });
         List<Product> products = resp.getBody();
@@ -39,7 +39,7 @@ public class ProductRestService extends RestService {
 
     public List<Product> getProductsByCategoryId(Integer categoryId) {
         ResponseEntity<List<Product>> resp =
-                getRestTemplate().exchange("http://localhost:8090/product/findByCategory?categoryId="+categoryId,
+                getRestTemplate().exchange(url+"/findByCategory?categoryId="+categoryId,
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<Product>>() {
                         });
         List<Product> products = resp.getBody();
@@ -48,7 +48,7 @@ public class ProductRestService extends RestService {
 
     public List<Product> getSixLatestProducts() {
         ResponseEntity<List<Product>> resp =
-                getRestTemplate().exchange("http://localhost:8090/product/getSixBest",
+                getRestTemplate().exchange(url+"/getSixBest",
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<Product>>() {
                         });
         List<Product> products = resp.getBody();
