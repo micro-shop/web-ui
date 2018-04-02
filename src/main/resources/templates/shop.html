@@ -45,7 +45,8 @@
                             <div th:each="product : ${products}" class="col-md-4 col-sm-6">
                                 <div class="single-shop-product">
                                     <div class="product-upper">
-                                        <img th:src="${product.productImageUrl}" alt=""/>
+                                        <img th:if="${product.productImageUrl != null}" th:src="${product.productImageUrl}" alt=""/>
+                                        <img th:if="${product.productImageUrl == null}" src="/img/img_not_found.gif"/>
                                     </div>
                                     <h2><a th:href="@{/product/show/{id}(id=${product.id})}" th:text="${product.name}">Apple new mac</a></h2>
                                     <div class="product-carousel-price">
