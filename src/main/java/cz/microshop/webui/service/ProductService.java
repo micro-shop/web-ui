@@ -2,8 +2,6 @@ package cz.microshop.webui.service;
 
 
 import cz.microshop.webui.model.Product;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -11,12 +9,12 @@ public interface ProductService {
 
 	Product findById(Long id);
 
-	Page<Product> getProductsByTerm(String searchTerm, Pageable pageable);
+	List<Product> getProductsByTerm(String searchTerm);
 
-	Page<Product> getProductsByCategoryId(Integer page, Pageable pageable);
+	List<Product> getProductsByCategoryId(Integer page);
 
 	List<Product> getSixLatestProducts();
 
-	Page<Product> getAll(Pageable pageable);
+	List<Product> getAll();
 
 }

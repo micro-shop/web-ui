@@ -3,8 +3,6 @@ package cz.microshop.webui.service;
 
 import cz.microshop.webui.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Page<Product> getAll(Pageable pageable) {
-		return productRestService.findAll(pageable);
+	public List<Product> getAll() {
+		return productRestService.findAll();
 	}
 }

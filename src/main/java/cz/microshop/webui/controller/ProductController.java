@@ -5,12 +5,11 @@ import cz.microshop.webui.model.Product;
 import cz.microshop.webui.service.CategoryService;
 import cz.microshop.webui.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/product")
@@ -36,9 +35,9 @@ public class ProductController {
 	@GetMapping("/list")
 	public String listProducts(Model model, @RequestParam(name="page", defaultValue="0", required=false) Integer page,
 			@RequestParam(name="searchTerm", defaultValue="", required=false) String searchTerm) {
-		Pageable pageable = new PageRequest(page, 6);
+		//Pageable pageable = new PageRequest(page, 6);
 		//Page<Product> products = productService.getProductsByTerm(searchTerm);
-		Page<Product> products = productService.getProductsByTerm(searchTerm, pageable);
+		List<Product> products = productService.getProductsByTerm(searchTerm);
 		loadCategories(model);
 		
 		model.addAttribute("showPagination", true);
@@ -52,9 +51,9 @@ public class ProductController {
 	@RequestMapping(value = "/list/category/{id}", method = RequestMethod.GET)
 	public String loadProductsByCategory(@PathVariable("id") Integer id, Model model, 
 			@RequestParam(name="page", defaultValue="0", required=false) Integer page) {
-		Pageable pageable = new PageRequest(page, 6);
+		//Pageable pageable = new PageRequest(page, 6);
 
-		Page<Product> products = productService.getProductsByCategoryId(id, pageable);
+		List<Product> products = productService.getProductsByCategoryId(id);
 		
 		loadCategories(model);
 		model.addAttribute("showPagination", true);

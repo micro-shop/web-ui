@@ -8,8 +8,6 @@ import cz.microshop.webui.service.CategoryService;
 import cz.microshop.webui.service.ProductService;
 import cz.microshop.webui.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,9 +37,10 @@ public class HomeController {
     
 	@RequestMapping("/")
 	public String index(Model model) {
-		Page<Product> sixLatestProducts = productService.getProductsByTerm("", new PageRequest(0, 6));
+		List<Product> sixLatestProducts = productService.getAll();
+		List<Product> promotedProducts = productService.getAll();
 		model.addAttribute("products", sixLatestProducts);
-		model.addAttribute("promotedProducts", sixLatestProducts);
+		model.addAttribute("promotedProducts", promotedProducts);
 		model.addAttribute("showJumbo", true);
 		model.addAttribute("categories", categoryService.getCategories());
 		return "shop";
