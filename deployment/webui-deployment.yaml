@@ -5,7 +5,7 @@ metadata:
   name: webui
   labels:
     name: webui
-  namespace: default
+  namespace: microshop
 spec:
   replicas: 1
   template:
