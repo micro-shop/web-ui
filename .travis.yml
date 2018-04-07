@@ -33,5 +33,5 @@ after_success:
   - kubectl config set-context default --cluster=default --user=default
   - kubectl config use-context default
   #- kubectl rolling-update webui --image=$IMAGE_VERSION
-  - kubectl set image deployment/webui webui=$IMAGE_VERSION
+  - kubectl set image deployment/webui webui=$IMAGE_VERSION --namespace=microshop
   #- kubectl apply -f ./deployment/webui-deployment.yml
