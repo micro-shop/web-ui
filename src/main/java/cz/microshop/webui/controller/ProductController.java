@@ -40,7 +40,7 @@ public class ProductController {
 		List<Product> products = productService.getProductsByTerm(searchTerm);
 		loadCategories(model);
 		
-		model.addAttribute("showPagination", true);
+		model.addAttribute("showPagination", true );
 		model.addAttribute("products", products);
 		model.addAttribute("page", page);
 		model.addAttribute("searchTerm", searchTerm);
