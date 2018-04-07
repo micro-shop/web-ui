@@ -18,9 +18,9 @@ public class HealthCheckController {
         Date dateNow = Calendar.getInstance().getTime();
 
         HealthCheck app = new HealthCheck("web-ui", "OK", dateNow);
-        HealthCheck version = new HealthCheck("version", "0.0.2-SNAPSHOT", dateNow);
-        healthChecks.add(app);
+        HealthCheck version = new HealthCheck("version", "0.0.1-SNAPSHOT", dateNow);
         healthChecks.add(version);
+        healthChecks.add(app);
 
         map.put("health", healthChecks);
         return map;
