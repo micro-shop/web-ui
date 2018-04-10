@@ -27,8 +27,8 @@ public class OrderServiceImpl implements OrderService {
 		Order order = new Order();
 		order.setCreatedAt(Date.from(Instant.now()));
 		order.setStatus(OrderStatus.BEGIN);
-		order.setShippingId(shipping.getShippingId());
-		order.setUserId(user.getUserId());
+		order.setShipping(shipping);
+		order.setUser(user);
 		setOrderedProducts(cart, order);
 		return orderRestService.save(order);
 	}

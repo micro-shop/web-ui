@@ -1,6 +1,7 @@
 package cz.microshop.webui.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,15 +10,13 @@ public class Order {
 
 	private Long orderId;
 	private BigDecimal total;
-	private Long shippingId;
 	private Date createdAt;
-	private Long userId;
+	private Shipping shipping;
+	private User user;
 
 	private OrderStatus status;
 
 	private List<OrderItem> orderItems;
-
-	//@Transient
 	private BigDecimal totalWithShipping;
 
 	public BigDecimal getTotal() {
@@ -45,36 +44,12 @@ public class Order {
 	}
 
 	public BigDecimal getTotalWithShipping() {
-		/*this.totalWithShipping = new BigDecimal(this.total.doubleValue() + this.shipping.getPrice().doubleValue());
-		return this.totalWithShipping.setScale(2, RoundingMode.HALF_UP);*/
-		return null;
+		this.totalWithShipping = new BigDecimal(this.total.doubleValue() + this.shipping.getPrice().doubleValue());
+		return this.totalWithShipping.setScale(2, RoundingMode.HALF_UP);
 	}
 
 	public Order() {
 		this.orderItems = new ArrayList<OrderItem>();
-	}
-
-	@Override
-	public String toString() {
-		/*return "Order [id=" + id + ", total=" + total + ", shipping=" + shipping + ", createdAt=" + createdAt
-				+ ", user=" + user + ", status=" + status + "]";*/
-		return "";
-	}
-
-	public Long getShippingId() {
-		return shippingId;
-	}
-
-	public void setShippingId(Long shippingId) {
-		this.shippingId = shippingId;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
 	}
 
 	public List<OrderItem> getOrderItems() {
@@ -91,5 +66,21 @@ public class Order {
 
 	public void setOrderId(Long orderId) {
 		this.orderId = orderId;
+	}
+
+	public Shipping getShipping() {
+		return shipping;
+	}
+
+	public void setShipping(Shipping shipping) {
+		this.shipping = shipping;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

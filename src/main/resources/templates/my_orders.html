@@ -21,14 +21,14 @@
 					      		<th>Cena za kus</th>
 							</tr>
 					      	<tr th:each="details : ${order.orderItems}">
-					      		<!--<td th:text="${details.productName}"></td>-->
+					      		<td th:text="${details.productName}"></td>
 					      		<td th:text="${details.quantity}"></td>
 					      		<td th:text="${#strings.concat(details.unitPrice, ' Kč')}"></td>
 					      	</tr>
 					      	<tr>
 					      		<th>Cena dopravy</th>
 					      		<td>&nbsp;</td>
-					      		<!--<th th:text="${#strings.concat(order.shipping.price, ' Kč')}"></th>-->
+					      		<th th:text="${#strings.concat(order.shipping.price, ' Kč')}"></th>
 					      	</tr>
 					      </table>
 					    </div>

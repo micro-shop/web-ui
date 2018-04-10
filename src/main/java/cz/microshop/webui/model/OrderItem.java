@@ -8,10 +8,7 @@ public class OrderItem {
 
 	private Long productId;
 	private String productName;
-	//@JsonIgnore
-	//private Order order;
 	private Long quantity;
-
 	private BigDecimal unitPrice;
 	
 	public OrderItem() {}
@@ -24,26 +21,12 @@ public class OrderItem {
 		this.id = id;
 	}
 
-	/*public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
-	}*/
-
 	public Long getQuantity() {
 		return quantity;
 	}
 
 	public void setQuantity(Long quantity) {
 		this.quantity = quantity;
-	}
-
-	@Override
-	public String toString() {
-		//return "OrderItem [id=" + id + ", product=" + product + ", order=" + order + ", quantity=" + quantity + "]";
-		return"";
 	}
 
 	public BigDecimal getUnitPrice() {
