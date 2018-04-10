@@ -1,14 +1,20 @@
 package cz.microshop.webui.service;
 
+import cz.microshop.webui.model.PasswordResetToken;
 import cz.microshop.webui.model.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by xnovm on 28.03.2018.
@@ -41,27 +47,16 @@ public class UserRestService extends RestService {
         return getRestTemplate().getForObject(url+"/find?username="+username, User.class);
     }
 
-    /*public ResponseEntity<ArrayList<User>> create(@RequestBody ArrayList<User> userList)   {
-        return new ResponseEntity<ArrayList<User>>((ArrayList<User>) usersService.create(userList), HttpStatus.OK);
+    public PasswordResetToken resetPassword(String email)   {
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
+        Map headersMap = new HashMap<String, String>();
+        headersMap.put("Content-Type", "application/json");
 
+        headers.setAll(headersMap);
+        MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
+        bodyMap.add("email", email);
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(bodyMap, headers);
+        return getRestTemplate().postForObject(url+"/createPasswordResetToken", request, PasswordResetToken.class);
     }
-
-    public ResponseEntity<HttpStatus> authenticateUser(@RequestBody User user) {
-        if(usersService.authenticateCustomer(user))
-            return new ResponseEntity<HttpStatus>(HttpStatus.OK);
-        else
-            return new ResponseEntity<HttpStatus>(HttpStatus.UNAUTHORIZED);
-
-    }
-
-    public ResponseEntity<User> login(@Param("username") String username, @Param("password") String password) {
-        User u = new User();
-        u.setUsername(username);
-        u.setPassword(password);
-        if (usersService.authenticateCustomer(u)) {
-            return new ResponseEntity<User>(usersService.findByUsername(username), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<User>(HttpStatus.UNAUTHORIZED);
-        }
-    }*/
 }

@@ -1,11 +1,13 @@
 package cz.microshop.webui.controller;
 
 import cz.microshop.webui.helpers.FlashMessage;
+import cz.microshop.webui.model.Email;
+import cz.microshop.webui.model.PasswordResetToken;
 import cz.microshop.webui.model.User;
+import cz.microshop.webui.service.EmailService;
 import cz.microshop.webui.service.UserSecurityService;
 import cz.microshop.webui.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
@@ -20,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
 
 @Controller
@@ -35,7 +36,10 @@ public class UserController {
 	
     @Autowired
     private UserService userService;
-    
+
+	@Autowired
+	private EmailService emailService;
+
 	@RequestMapping(value = "/remove")
 	public String invalidateAccount(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		
@@ -111,29 +115,25 @@ public class UserController {
 		if (user == null) {
 			return "redirect:/";
 		}
-		String token = UUID.randomUUID().toString();
-		userService.createPasswordResetTokenForUser(user, token);
-		//mailSender.send(constructResetTokenEmail(request.getRequestURI(),
-		//		request.getLocale(), token, user));
+		PasswordResetToken token = userService.createPasswordResetTokenForUser(user, null);
+		emailService.send(constructResetTokenEmail(request.getRequestURI(), token.getToken(), user));
 		FlashMessage.createFlashMessage("alert-success", "Your password has been changed. Check your email inbox"
 				+ " for further instructions", redirectAttributes);
 		return "redirect:/signin";
 	}
 	
-	private SimpleMailMessage constructResetTokenEmail(String contextPath, Locale locale, String token, User user) {
+	private Email constructResetTokenEmail(String contextPath, String token, User user) {
 		
 		String url = contextPath + "/user/changePassword?id=" +
 				user.getUserId() + "&token=" + token;
-		return constructEmail("Reset Password", "Hi. To reset your password, follow the link above" + " \r\n" + url, user);
+		return constructEmail("Hi. To reset your password, follow the link above" + " \r\n" + url, user);
 	}
 	
-	private SimpleMailMessage constructEmail(String subject, String body, User user) {
+	private Email constructEmail(String body, User user) {
 		
-		SimpleMailMessage email = new SimpleMailMessage();
-		email.setSubject(subject);
-		email.setText(body);
+		Email email = new Email();
+		email.setContent(body);
 		email.setTo(user.getEmail());
-		email.setFrom("ciprojektwimiip@gmail.com"); //TODO: UPDATE LATER
 		return email;
 	}
 	

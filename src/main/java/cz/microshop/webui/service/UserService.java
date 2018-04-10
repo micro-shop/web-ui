@@ -1,5 +1,6 @@
 package cz.microshop.webui.service;
 
+import cz.microshop.webui.model.PasswordResetToken;
 import cz.microshop.webui.model.User;
 import cz.microshop.webui.security.UserRole;
 
@@ -11,6 +12,8 @@ public interface UserService {
 	User findByUsername(String username);
 
     User findByEmail(String email);
+
+    PasswordResetToken resetPassword(String email);
 
     boolean checkUsernameExists(String username);
 
@@ -30,7 +33,7 @@ public interface UserService {
 
 	boolean checkPhoneNumberExists(String phone);
 
-	void createPasswordResetTokenForUser(User User, String token);
+	PasswordResetToken createPasswordResetTokenForUser(User User, String token);
 	
 	public void updateUserPassword(User User);
 

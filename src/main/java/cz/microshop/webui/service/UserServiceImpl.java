@@ -1,7 +1,7 @@
 package cz.microshop.webui.service;
 
+import cz.microshop.webui.model.PasswordResetToken;
 import cz.microshop.webui.model.User;
-import cz.microshop.webui.security.PasswordResetToken;
 import cz.microshop.webui.security.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +45,11 @@ public class UserServiceImpl implements UserService {
     public User findByEmail(String email) {
         return null;
         //return userRestService.findByEmail(email);
+    }
+
+    @Override
+    public cz.microshop.webui.model.PasswordResetToken resetPassword(String email) {
+        return null;
     }
 
     public User createUser(User user2, Set<UserRole> userRoles) {
@@ -118,14 +123,14 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 
-	public User findByPhone(String phone) {
+    @Override
+    public PasswordResetToken createPasswordResetTokenForUser(User user, String token) {
+        return userRestService.resetPassword(user.getEmail());
+    }
+
+    public User findByPhone(String phone) {
         return null;
 		//return userRestService.findByPhone(phone);
-	}
-
-	public void createPasswordResetTokenForUser(User user2, String token) {
-	    PasswordResetToken myToken = new PasswordResetToken(token, user2);
-	    //passwordTokenDao.save(myToken);
 	}
 
 	@Override	
