@@ -43,8 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User findByEmail(String email) {
-        return null;
-        //return userRestService.findByEmail(email);
+        return userRestService.findByEmail(email);
     }
 
     @Override
@@ -83,6 +82,11 @@ public class UserServiceImpl implements UserService {
         }
 
         return false;
+    }
+
+    @Override
+    public User find(Long id) {
+        return userRestService.find(id);
     }
 
     public boolean checkEmailExists(String email) {
@@ -126,6 +130,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public PasswordResetToken createPasswordResetTokenForUser(User user, String token) {
         return userRestService.resetPassword(user.getEmail());
+    }
+
+    @Override
+    public Boolean validatePasswordResetToken(long id, String token) {
+        return userRestService.validatePasswordResetToken(id, token);
     }
 
     public User findByPhone(String phone) {

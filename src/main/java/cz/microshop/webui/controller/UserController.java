@@ -5,9 +5,11 @@ import cz.microshop.webui.model.Email;
 import cz.microshop.webui.model.PasswordResetToken;
 import cz.microshop.webui.model.User;
 import cz.microshop.webui.service.EmailService;
-import cz.microshop.webui.service.UserSecurityService;
 import cz.microshop.webui.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -84,13 +87,19 @@ public class UserController {
 	public String showChangePasswordPage(Locale locale, RedirectAttributes redirectAttributes, 
 			@RequestParam("id") long id, @RequestParam("token") String token) {
 		
-	    String result = ((UserSecurityService) securityService).validatePasswordResetToken(id, token);
-	    if (result != null) {
+	    Boolean result = userService.validatePasswordResetToken(id, token);
+	    if (result == null || Boolean.FALSE.equals(result)) {
 	    	FlashMessage.createFlashMessage("alert-danger", "Cannot reset your password. Try again later or"
 	    			+ " resend reset token on your email address.", redirectAttributes);
 	        return "redirect:/login?lang=" + locale.getLanguage();
-	    }
-	    return "redirect:/user/updatePassword";
+	    } else {
+			User user = userService.find(id);
+			Authentication auth = new UsernamePasswordAuthenticationToken(
+					user, null, Arrays.asList(
+					new SimpleGrantedAuthority("CHANGE_PASSWORD_PRIVILEGE")));
+			SecurityContextHolder.getContext().setAuthentication(auth);
+			return "redirect:/user/updatePassword";
+		}
 	}
 	
 	@RequestMapping(value="/updatePassword")
@@ -116,7 +125,10 @@ public class UserController {
 			return "redirect:/";
 		}
 		PasswordResetToken token = userService.createPasswordResetTokenForUser(user, null);
-		emailService.send(constructResetTokenEmail(request.getRequestURI(), token.getToken(), user));
+		StringBuffer url = request.getRequestURL();
+		String uri = request.getRequestURI();
+		String host = url.substring(0, url.indexOf(uri));
+		emailService.send(constructResetTokenEmail(host, token.getToken(), user));
 		FlashMessage.createFlashMessage("alert-success", "Your password has been changed. Check your email inbox"
 				+ " for further instructions", redirectAttributes);
 		return "redirect:/signin";

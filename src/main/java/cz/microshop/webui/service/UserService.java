@@ -13,6 +13,8 @@ public interface UserService {
 
     User findByEmail(String email);
 
+    User find(Long id);
+
     PasswordResetToken resetPassword(String email);
 
     boolean checkUsernameExists(String username);
@@ -34,6 +36,8 @@ public interface UserService {
 	boolean checkPhoneNumberExists(String phone);
 
 	PasswordResetToken createPasswordResetTokenForUser(User User, String token);
+
+    Boolean validatePasswordResetToken(long id, String token);
 	
 	public void updateUserPassword(User User);
 

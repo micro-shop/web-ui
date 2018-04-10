@@ -4,17 +4,12 @@ import cz.microshop.webui.model.PasswordResetToken;
 import cz.microshop.webui.model.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by xnovm on 28.03.2018.
@@ -44,19 +39,22 @@ public class UserRestService extends RestService {
     }
 
     public User find(String username)   {
-        return getRestTemplate().getForObject(url+"/find?username="+username, User.class);
+        return getRestTemplate().getForObject(url+"/findByUsername?username="+username, User.class);
+    }
+
+    public User find(Long id)   {
+        return getRestTemplate().getForObject(url+"/find?id="+id, User.class);
     }
 
     public PasswordResetToken resetPassword(String email)   {
-        MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-        Map headersMap = new HashMap<String, String>();
-        headersMap.put("Content-Type", "application/json");
+        return getRestTemplate().getForObject(url+"/createPasswordResetToken?email="+email, PasswordResetToken.class);
+    }
 
-        headers.setAll(headersMap);
-        MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
-        bodyMap.add("email", email);
+    public User findByEmail(String email) {
+        return getRestTemplate().getForObject(url+"/findByEmail?email="+email, User.class);
+    }
 
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(bodyMap, headers);
-        return getRestTemplate().postForObject(url+"/createPasswordResetToken", request, PasswordResetToken.class);
+    public Boolean validatePasswordResetToken(long id, String token) {
+        return getRestTemplate().getForObject(url+ "/validatePasswordResetToken?userId="+id+"&token="+token, Boolean.class);
     }
 }
