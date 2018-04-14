@@ -20,26 +20,19 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
-	
 	@Autowired
 	private CartService cartService;
-	
 	@Autowired
 	private UserService userService;
-	
 	@Autowired
 	private ShippingService shippingService;
-
 	@Autowired
 	private PaymentService paymentService;
-/*
-
 	@Autowired
-	private JavaMailSender mailSender;
-*/
+	private EmailService emailService;
 
 	@RequestMapping(value="/processPayment", method=RequestMethod.POST)
-	public String paypalHook(Model model, @RequestParam("orderId") Long orderId) {
+	public String paymentHook(Model model, @RequestParam("orderId") Long orderId) {
 		System.out.println("PAYMENT SUCCESS FOR " + orderId);
 		User user = userService.findByUsername(SecurityContextHolder.getContext()
 				.getAuthentication().getName());
@@ -64,7 +57,7 @@ public class OrderController {
                 .getAuthentication().getName());
 		Order order = orderService.placeOrder(cart, shipping, user);
 		FlashMessage.createFlashMessage("info", "Your order has been placed successfully.", model);
-		sendEmailMessageWithOrderList(order, user);
+		emailService.send(constructEmailMessageWithOrderList(order, user));
 		httpRequest.getSession().setAttribute("cartQuantity", cart.getItems().size());
 		model.addAttribute("user", user);
 		model.addAttribute("order", order);
@@ -73,7 +66,6 @@ public class OrderController {
 	
 	@RequestMapping(value = "/my_orders", method = RequestMethod.GET)
 	public String showMyOrders(Model model, @RequestParam(name="page", defaultValue="0", required=false) Integer page) {
-		//Pageable pageable = new PageRequest(page, 5);
 		User user = userService.findByUsername(SecurityContextHolder.getContext()
                 .getAuthentication().getName());
 		List<Order> orders = orderService.userOrders(user.getUserId());
@@ -83,22 +75,11 @@ public class OrderController {
 		return "my_orders";
 	}
 	
-	private void sendEmailMessageWithOrderList(Order order, User user) {
-		/*String mailContent = FlashMessage.createOrderContentsMessage(order, user);
-		Session session = null;
-		MimeMessage mimeMessage = new MimeMessage(session);
-		
-		try {
-			mimeMessage.setSubject("Online Shop. Purchase id: " + order.getId());
-			mimeMessage.setRecipient(RecipientType.TO, new InternetAddress(user.getEmail(), "user"));
-			mimeMessage.setContent(mailContent, "text/html");
-			mimeMessage.setFrom("ciprojektwimiip@gmail.com"); //TODO: UPDATE LATER
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		
-		mailSender.send(mimeMessage);*/
+	private Email constructEmailMessageWithOrderList(Order order, User user) {
+		String content = FlashMessage.createOrderContentsMessage(order, user);
+		Email email = new Email();
+		email.setContent(content);
+		email.setTo(user.getEmail());
+		return email;
 	}
 }

@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 
 public class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
 
-    final static Logger log = LoggerFactory.getLogger(LoggingRequestInterceptor.class);
+    private final static Logger LOG = LoggerFactory.getLogger(LoggingRequestInterceptor.class);
 
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
@@ -24,12 +24,12 @@ public class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
     }
 
     private void traceRequest(HttpRequest request, byte[] body) throws IOException {
-        System.out.println("===========================request begin================================================");
-        System.out.println("URI         : "+ request.getURI());
-        System.out.println("Method      : "+ request.getMethod());
-        System.out.println("Headers     : "+ request.getHeaders() );
-        System.out.println("Request body: "+ new String(body, "UTF-8"));
-        System.out.println("==========================request end================================================");
+        LOG.debug("===========================request begin================================================");
+        LOG.debug("URI         : "+ request.getURI());
+        LOG.debug("Method      : "+ request.getMethod());
+        LOG.debug("Headers     : "+ request.getHeaders() );
+        LOG.debug("Request body: "+ new String(body, "UTF-8"));
+        LOG.debug("==========================request end================================================");
     }
 
     private void traceResponse(ClientHttpResponse response) throws IOException {
@@ -41,12 +41,12 @@ public class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
             inputStringBuilder.append('\n');
             line = bufferedReader.readLine();
         }
-        System.out.println("============================response begin==========================================");
-        System.out.println("Status code  : "+ response.getStatusCode());
-        System.out.println("Status text  : "+ response.getStatusText());
-        System.out.println("Headers      : "+ response.getHeaders());
-        System.out.println("Response body: "+ inputStringBuilder.toString());
-        System.out.println("=======================response end=================================================");
+        LOG.debug("============================response begin==========================================");
+        LOG.debug("Status code  : "+ response.getStatusCode());
+        LOG.debug("Status text  : "+ response.getStatusText());
+        LOG.debug("Headers      : "+ response.getHeaders());
+        LOG.debug("Response body: "+ inputStringBuilder.toString());
+        LOG.debug("=======================response end=================================================");
     }
 
 }

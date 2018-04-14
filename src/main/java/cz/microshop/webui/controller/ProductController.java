@@ -35,8 +35,6 @@ public class ProductController {
 	@GetMapping("/list")
 	public String listProducts(Model model, @RequestParam(name="page", defaultValue="0", required=false) Integer page,
 			@RequestParam(name="searchTerm", defaultValue="", required=false) String searchTerm) {
-		//Pageable pageable = new PageRequest(page, 6);
-		//Page<Product> products = productService.getProductsByTerm(searchTerm);
 		List<Product> products = productService.getProductsByTerm(searchTerm);
 		loadCategories(model);
 		
@@ -51,8 +49,6 @@ public class ProductController {
 	@RequestMapping(value = "/list/category/{id}", method = RequestMethod.GET)
 	public String loadProductsByCategory(@PathVariable("id") Integer id, Model model, 
 			@RequestParam(name="page", defaultValue="0", required=false) Integer page) {
-		//Pageable pageable = new PageRequest(page, 6);
-
 		List<Product> products = productService.getProductsByCategoryId(id);
 		
 		loadCategories(model);

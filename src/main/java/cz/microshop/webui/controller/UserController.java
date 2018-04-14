@@ -30,16 +30,11 @@ import java.util.Locale;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-/*
-	@Autowired
-	private JavaMailSender mailSender;*/
-    
+
     @Autowired
     private UserDetailsService securityService;
-	
-    @Autowired
+	@Autowired
     private UserService userService;
-
 	@Autowired
 	private EmailService emailService;
 
