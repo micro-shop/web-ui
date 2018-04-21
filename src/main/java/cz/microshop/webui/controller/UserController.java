@@ -46,12 +46,12 @@ public class UserController {
 		try {
 			request.logout();
 		} catch(ServletException e) {
-			FlashMessage.createFlashMessage("alert-danger", "Couldn't finalize request. Try again later", redirectAttributes);
+			FlashMessage.createFlashMessage("alert-danger", "Operaci nebylo možné dokončit. Akci opakujte později", redirectAttributes);
 			return "redirect:/";
 		}
 
 		userService.disableUser(signedIn.getUsername());
-		FlashMessage.createFlashMessage("alert-warning", "Your account has been removed.", redirectAttributes);
+		FlashMessage.createFlashMessage("alert-warning", "Váš účet byl zrušen.", redirectAttributes);
 		return "redirect:/";
 	}
 	
@@ -73,7 +73,7 @@ public class UserController {
 	    	model.addAttribute("errorMessages", errorMessages);
 	    	return "updatePassword";
 	    }
-	    FlashMessage.createFlashMessage("alert-success", "Your password has been updated.", redirectAttributes);
+	    FlashMessage.createFlashMessage("alert-success", "Vaše heslo bylo změněno.", redirectAttributes);
 	    userService.updateUserPassword(user);
 	    return "redirect:/";
 	}	
@@ -84,8 +84,7 @@ public class UserController {
 		
 	    Boolean result = userService.validatePasswordResetToken(id, token);
 	    if (result == null || Boolean.FALSE.equals(result)) {
-	    	FlashMessage.createFlashMessage("alert-danger", "Cannot reset your password. Try again later or"
-	    			+ " resend reset token on your email address.", redirectAttributes);
+	    	FlashMessage.createFlashMessage("alert-danger", "Heslo nebylo možné resetovat. Operaci opakujte později.", redirectAttributes);
 	        return "redirect:/login?lang=" + locale.getLanguage();
 	    } else {
 			User user = userService.find(id);
@@ -124,8 +123,7 @@ public class UserController {
 		String uri = request.getRequestURI();
 		String host = url.substring(0, url.indexOf(uri));
 		emailService.send(constructResetTokenEmail(host, token.getToken(), user));
-		FlashMessage.createFlashMessage("alert-success", "Your password has been changed. Check your email inbox"
-				+ " for further instructions", redirectAttributes);
+		FlashMessage.createFlashMessage("alert-success", "Vaše heslo bylo změněno. Pro další postup následujte instrukce zaslané v emailu", redirectAttributes);
 		return "redirect:/signin";
 	}
 	
@@ -133,7 +131,7 @@ public class UserController {
 		
 		String url = contextPath + "/user/changePassword?id=" +
 				user.getUserId() + "&token=" + token;
-		return constructEmail("Hi. To reset your password, follow the link above" + " \r\n" + url, user);
+		return constructEmail("Dobrý den. Pro resetování heslo klikněte na následující odkaaz" + " \r\n" + url, user);
 	}
 	
 	private Email constructEmail(String body, User user) {
