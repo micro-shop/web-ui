@@ -5,35 +5,49 @@
 <!-- Page Content -->
     <div class="container">
 
+		<div class="row">
+			<div class="product-big-title-area">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="product-bit-title text-center">
+								<h2>Souhrn objednávky</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
       <div class="row">
 
         	<div class="col-sm-12">
         		<table class="table table-hover">
-        			<tr><th>Name</th><td th:text="${user.firstName}"></td></tr>
-        			<tr><th>Surname</th><td th:text="${user.lastName}"></td></tr>
+        			<tr><th>Jméno</th><td th:text="${user.firstName}"></td></tr>
+        			<tr><th>Příjmení</th><td th:text="${user.lastName}"></td></tr>
         			<tr><th>Email</th><td th:text="${user.email}"></td></tr>
-        			<tr><th>Phone</th><td th:text="${user.phone}"></td></tr>
-        			<tr><th>Address</th><td th:text="${user.address}"></td></tr>
-        			<tr><th>City</th><td th:text="${user.city}"></td></tr>
-        			<tr><th>Postal code</th><td th:text="${user.postcode}"></td></tr>
+        			<tr><th>Telefon</th><td th:text="${user.phone}"></td></tr>
+        			<tr><th>Adresa</th><td th:text="${user.address}"></td></tr>
+        			<tr><th>Město</th><td th:text="${user.city}"></td></tr>
+        			<tr><th>PSČ</th><td th:text="${user.postcode}"></td></tr>
         		</table>
 				<form class="form" th:action="@{/order/payment}" method="post">
 					<input type="hidden" th:value="${order.orderId}" name="orderId" />
 		            <table class="table table-hover">
 		                <thead>
 		                    <tr>
-		                        <th>Product</th>
+		                        <th>Produkt</th>
 		                        <th>&nbsp;</th>
-		                        <th>Quantity</th>
-		                        <th class="text-center">Price</th>
-		                        <th class="text-center">Total</th>
+		                        <th>Množství</th>
+		                        <th class="text-center">Cena</th>
+		                        <th class="text-center">Celková cena</th>
 		                        <th> </th>
 		                    </tr>
 		                </thead>
 		                <tbody>
 		                    <tr th:each="orderDetails : ${order.orderItems}">
-		                    	<!--<td><a class="thumbnail pull-left" th:href="@{/product/show/{id}(id=${orderDetails.productId})}">-->
-		                    	<!--<img class="media-object" th:src="${orderDetails.product.productImageUrl}" style="width: 72px; height: 72px;"/> </a></td>-->
+		                    	<td><a class="thumbnail pull-left" th:href="@{/product/show/{id}(id=${orderDetails.productId})}">
+								<img class="media-object" src="/img/img_not_found.gif" style="width: 72px; height: 72px;"/> </a></td>
 		                        <td class="col-sm-8 col-md-6">
 		                        <div class="media">
 		                            <div class="media-body">
@@ -42,8 +56,8 @@
 		                        </div></td>
 		                        <td class="col-sm-1 col-md-1" style="text-align: center" th:text="${orderDetails.quantity}">
 		                        </td>
-		                        <td class="col-sm-1 col-md-1 text-center"><strong th:text="${#strings.concat(orderDetails.unitPrice, '$')}"></strong></td>
-		                        <td class="col-sm-1 col-md-1 text-center"><strong th:text="${#strings.concat(orderDetails.unitPrice * orderDetails.quantity, '$')}"></strong></td>
+		                        <td class="col-sm-1 col-md-1 text-center"><strong th:text="${#strings.concat(orderDetails.unitPrice, ' Kč'))}"></strong></td>
+		                        <td class="col-sm-1 col-md-1 text-center"><strong th:text="${#strings.concat(orderDetails.unitPrice * orderDetails.quantity, ' Kč')}"></strong></td>
 		                        <td class="col-sm-1 col-md-1">
 		                        	&nbsp;
 		                        </td>
@@ -55,14 +69,14 @@
 		                        <td>   </td>
 		                        <td>   </td>
 		                        <td>   </td>
-		                        <td><h3>Total</h3></td>
-		                        <td class="text-right"><h3 th:text="${#strings.concat(order.totalWithShipping, '$')}"></h3></td>
+		                        <td><h3>Celková cena</h3></td>
+		                        <td class="text-right"><h3 th:text="${#strings.concat(order.totalWithShipping, ' Kč')}"></h3></td>
 		                    </tr>
 		                    <tr>
 		                    	<td>   </td>
 		                        <td>   </td>
 		                        <td>   </td>
-		                        <td><a th:href="@{/order/my_orders}" class="btn btn-warning btn-sm">I'll pay later</a>   </td>
+		                        <td><a th:href="@{/order/my_orders}" class="btn btn-warning btn-sm">Zpět do obchodu</a>   </td>
 		                        <td>
 		                        	
 		                        </td>
@@ -78,7 +92,7 @@
 		                        <input type="hidden" name="quantity" value="1" />
 		                        <input type="hidden" name="notify_url" value="http://localhost:8080/order/hook" />
 		                        <button type="submit" class="btn btn-success btn-sm">
-		                            PayPal <i class="fa fa-play" aria-hidden="true"></i>
+		                            Zaplatit objednávku <i class="fa fa-play" aria-hidden="true"></i>
 		                        </button></td>
 		                    </tr>
 		                </tfoot>
