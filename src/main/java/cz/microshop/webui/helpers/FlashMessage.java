@@ -65,7 +65,7 @@ public class FlashMessage {
 		stringBuilder.append("</table>");
 		stringBuilder.append("<p>");
 		stringBuilder.append("Aktuální stav Vaší objednávky je: " + order.getStatus());
-		stringBuilder.append("<br />O dalším postupu Vás budeme informovat prostřednicvím emailu. BR OnlineShop.");
+		stringBuilder.append("<br />O dalším postupu Vás budeme informovat prostřednicvím emailu.");
 		stringBuilder.append("<br />");
 		stringBuilder.append("<br />S pozdravem");
 		stringBuilder.append("<br />Microshop");
