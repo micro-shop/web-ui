@@ -39,13 +39,12 @@
     <label>Číslo karty</label>
     <input class="number" type="text" ng-model="ncard" maxlength="19" />
     <label>Expirace</label>
-    <input class="expire" type="text" placeholder="MM / YYYY"/>
-    <label>CVC2/CVV2</label>
+    <input class="expire" type="text" placeholder="MM / RRRR"/>
+    <label>CVC2 / CVV2</label>
     <input class="ccv" type="text" maxlength="3" />
-    <button class="buy"><i class="material-icons">lock</i>Zaplatit</button>
     <form action="#" th:action="@{/order/processPayment}" method="post">
       <input type="hidden" th:value="${orderId}" name="orderId" />
-      <input type="submit" class="buy"><i class="material-icons">lock</i></input>
+      <input type="submit" class="buy"/>
     </form>
   </div>
 </div>
