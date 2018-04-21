@@ -1,65 +1,55 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
 
 <head>
-  <meta charset="UTF-8"/>
-  <title>Payment card checkout</title>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"/>
-  
-  
-      <link rel="stylesheet" href="/payment/css/style.css"/>
-
-  
+    <meta charset="UTF-8"/>
+    <title>Payment card checkout</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet"/>
+    <link rel="stylesheet" href="/payment/css/style.css"/>
 </head>
 
 <body>
-	<h1 style="text-align:  center;">MOCK PAYMENT GATEWAY</h1>
+<h1 style="text-align:  center;">MOCK PAYMENT GATEWAY</h1>
 <div class="container">
-  <div class="col1">
-    <div class="card">
-      <div class="front">
-        <div class="type">
-          <img class="bankid"/>
+    <div class="col1">
+        <div class="card">
+            <div class="front">
+                <div class="type">
+                    <img class="bankid"/>
+                </div>
+                <span class="chip"></span>
+                <span class="card_number">&#x25CF;&#x25CF;&#x25CF;&#x25CF; &#x25CF;&#x25CF;&#x25CF;&#x25CF; &#x25CF;&#x25CF;&#x25CF;&#x25CF; &#x25CF;&#x25CF;&#x25CF;&#x25CF; </span>
+                <div class="date"><span class="date_value">MM / RRRR</span></div>
+                <span class="fullname">Jméno a Příjmení</span>
+            </div>
+            <div class="back">
+                <div class="magnetic"></div>
+                <div class="bar"></div>
+                <span class="seccode">&#x25CF;&#x25CF;&#x25CF;</span>
+                <span class="chip"></span><span class="disclaimer">This card is property of Random Bank of Random corporation. <br/> If found please return to Random Bank of Random corporation - 21968 Paris, Verdi Street, 34 </span>
+            </div>
         </div>
-        <span class="chip"></span>
-        <span class="card_number">&#x25CF;&#x25CF;&#x25CF;&#x25CF; &#x25CF;&#x25CF;&#x25CF;&#x25CF; &#x25CF;&#x25CF;&#x25CF;&#x25CF; &#x25CF;&#x25CF;&#x25CF;&#x25CF; </span>
-        <div class="date"><span class="date_value">MM / RRRR</span></div>
-        <span class="fullname">Jméno a Příjmení</span>
-      </div>
-      <div class="back">
-        <div class="magnetic"></div>
-        <div class="bar"></div>
-        <span class="seccode">&#x25CF;&#x25CF;&#x25CF;</span>
-        <span class="chip"></span><span class="disclaimer">This card is property of Random Bank of Random corporation. <br/> If found please return to Random Bank of Random corporation - 21968 Paris, Verdi Street, 34 </span>
-      </div>
     </div>
-  </div>
-  <div class="col2">
-    <label>Číslo karty</label>
-    <input class="number" type="text" ng-model="ncard" maxlength="19" />
-    <label>Vlatník karty</label>
-    <input class="inputname" type="text" placeholder=""/>
-    <label>Expirace</label>
-    <input class="expire" type="text" placeholder="MM / RRRR"/>
-    <label>CVC2 / CVV2</label>
-    <input class="ccv" type="text" maxlength="3" />
-    <form action="#" th:action="@{/order/processPayment}" method="post">
-      <input type="hidden" th:value="${orderId}" name="orderId" />
-      <input type="submit" class="buy"/>
-    </form>
-  </div>
+    <div class="col2">
+        <label>Číslo karty</label>
+        <input class="number" type="text" ng-model="ncard" maxlength="19"/>
+        <label>Vlastník karty</label>
+        <input class="inputname" type="text" placeholder=""/>
+        <label></label>
+        <input class="expire" type="text" placeholder="MM / RRRR"/>
+        <label>CVC2 / CVV2</label>
+        <input class="ccv" type="text" maxlength="3"/>
+        <form action="#" th:action="@{/order/processPayment}" method="post">
+            <input type="hidden" th:value="${orderId}" name="orderId"/>
+            <input type="submit" class="buy"/>
+        </form>
+    </div>
 </div>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
-
-  
-
-    <script  src="/payment/js/index.js"></script>
-
-
-
+<script src="/payment/js/index.js"></script>
 
 </body>
 
