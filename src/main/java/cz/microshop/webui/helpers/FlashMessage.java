@@ -41,7 +41,7 @@ public class FlashMessage {
 		stringBuilder.append("</head>");
 		stringBuilder.append("<body>");
 		stringBuilder.append("<p>");
-		stringBuilder.append("Dobrý den uživateli " + user.getFirstName() + " " + user.getLastName() + "(" + user.getUsername() + ").");
+		stringBuilder.append("Dobrý den uživateli " + user.getFirstName() + " " + user.getLastName() + " (" + user.getUsername() + ").");
 		stringBuilder.append("Děkujeme za nákup. Níže Vám zasíláme seznam zakoupeného zboží:");
 		stringBuilder.append("</p>");
 		stringBuilder.append("<table>");
