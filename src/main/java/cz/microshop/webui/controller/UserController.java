@@ -131,7 +131,7 @@ public class UserController {
 		
 		String url = contextPath + "/user/changePassword?id=" +
 				user.getUserId() + "&token=" + token;
-		return constructEmail("Dobrý den. Pro resetování heslo klikněte na následující odkaaz" + " \r\n" + url, user);
+		return constructEmail("Dobrý den. Pro resetování heslo klikněte na následující odkaz" + " \r\n" + url, user);
 	}
 	
 	private Email constructEmail(String body, User user) {
