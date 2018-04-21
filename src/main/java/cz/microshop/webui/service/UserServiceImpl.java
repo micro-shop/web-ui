@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserRestService userRestService;
+    private UserRestClient userRestService;
 
 	public void save(User user2) {
         User u = new User();

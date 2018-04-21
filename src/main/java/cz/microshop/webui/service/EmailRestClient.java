@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmailRestService extends RestService {
+public class EmailRestClient extends RestClient {
 
     @Value("${url.restserviceurl.email}")
     private String url;

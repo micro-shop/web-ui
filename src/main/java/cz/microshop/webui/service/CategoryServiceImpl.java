@@ -10,11 +10,11 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
 
 	@Autowired
-	private CategoryRestService categoryRestService;
+	private CategoryRestClient categoryRestClient;
 
 	@Override
 	public List<Category> getCategories() {
-		return categoryRestService.findAll();
+		return categoryRestClient.findAll();
 	}
 	
 }

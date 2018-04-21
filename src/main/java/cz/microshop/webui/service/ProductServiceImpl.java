@@ -11,30 +11,30 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
 	@Autowired
-	private ProductRestService productRestService;
+	private ProductRestClient productRestClient;
 
 	@Override
 	public Product findById(Long id) {
-		return productRestService.find(id);
+		return productRestClient.find(id);
 	}
 
 	@Override
 	public List<Product> getProductsByTerm(String searchTerm) {
-		return productRestService.getProductsByTerm(searchTerm);
+		return productRestClient.getProductsByTerm(searchTerm);
 	}
 
 	@Override
 	public List<Product> getProductsByCategoryId(Integer categoryId) {
-		return productRestService.getProductsByCategoryId(categoryId);
+		return productRestClient.getProductsByCategoryId(categoryId);
 	}
 	
 	@Override
 	public List<Product> getSixLatestProducts() {
-		return productRestService.getSixLatestProducts();
+		return productRestClient.getSixLatestProducts();
 	}
 
 	@Override
 	public List<Product> getAll() {
-		return productRestService.findAll();
+		return productRestClient.findAll();
 	}
 }

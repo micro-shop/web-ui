@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class OrderRestService extends RestService {
+public class OrderRestClient extends RestClient {
 
     @Value("${url.restserviceurl.orders}")
     private String url;

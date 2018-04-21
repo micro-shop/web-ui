@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CartRestService extends RestService {
+public class CartRestClient extends RestClient {
 
     @Value("${url.restserviceurl.cart}")
     private String url;

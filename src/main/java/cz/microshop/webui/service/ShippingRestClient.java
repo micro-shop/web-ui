@@ -13,7 +13,7 @@ import java.util.List;
  * Created by xnovm on 28.03.2018.
  */
 @Service
-public class ShippingRestService extends RestService {
+public class ShippingRestClient extends RestClient {
 
     @Value("${url.restserviceurl.shipping}")
     private String url;

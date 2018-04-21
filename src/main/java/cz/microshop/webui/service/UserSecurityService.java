@@ -17,7 +17,7 @@ public class UserSecurityService implements UserDetailsService {
     private static final Logger LOG = LoggerFactory.getLogger(UserSecurityService.class);
 
     @Autowired
-    private UserRestService userRestService;
+    private UserRestClient userRestService;
 
     /*@Autowired
 	private PasswordTokenDao passwordResetTokenDao;*/

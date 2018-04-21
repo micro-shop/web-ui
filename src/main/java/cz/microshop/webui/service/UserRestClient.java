@@ -15,7 +15,7 @@ import java.util.List;
  * Created by xnovm on 28.03.2018.
  */
 @Service
-public class UserRestService extends RestService {
+public class UserRestClient extends RestClient {
 
     @Value("${url.restserviceurl.users}")
     private String url;

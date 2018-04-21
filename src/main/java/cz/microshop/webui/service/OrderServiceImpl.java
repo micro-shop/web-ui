@@ -14,13 +14,13 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
 	@Autowired
-	private ProductRestService productRestService;
+	private ProductRestClient productRestClient;
 
 	@Autowired
-	private CartRestService cartRestService;
+	private CartRestClient cartRestClient;
 
 	@Autowired
-	private OrderRestService orderRestService;
+	private OrderRestClient orderRestClient;
 	
 	@Override
 	public Order placeOrder(Cart cart, Shipping shipping, User user) {
@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setShipping(shipping);
 		order.setUser(user);
 		setOrderedProducts(cart, order);
-		return orderRestService.save(order);
+		return orderRestClient.save(order);
 	}
 	
 	@Override
@@ -42,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
 		double totalPrice = 0.0;
 		for(Item cartItem : cart.getItems()) {
 			OrderItem orderItem = new OrderItem();
-			Product product = productRestService.find(cartItem.getProductId());
+			Product product = productRestClient.find(cartItem.getProductId());
 
 			if(product.getQuantity() <= 0L) {
 				continue;
@@ -64,13 +64,13 @@ public class OrderServiceImpl implements OrderService {
 			order.getOrderItems().add(orderItem);
 		}
 		cart.getItems().clear();
-		cartRestService.save(cart);
+		cartRestClient.save(cart);
 		BigDecimal total = new BigDecimal(totalPrice);
 		order.setTotal(total.setScale(2, RoundingMode.HALF_UP));
 	}
 
 	@Override
 	public List<Order> userOrders(Long userId) {
-		return orderRestService.findByUserId(userId);
+		return orderRestClient.findByUserId(userId);
 	}
 }

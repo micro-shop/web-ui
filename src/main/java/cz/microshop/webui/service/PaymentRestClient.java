@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
  * Created by xnovm on 28.03.2018.
  */
 @Service
-public class PaymentRestService extends RestService {
+public class PaymentRestClient extends RestClient {
 
     @Value("${url.restserviceurl.payment}")
     private String url;

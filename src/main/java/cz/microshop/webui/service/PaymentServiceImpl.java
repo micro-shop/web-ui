@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 public class PaymentServiceImpl implements PaymentService {
 
 	@Autowired
-	private PaymentRestService paymentRestService;
+	private PaymentRestClient paymentRestClient;
 
 	@Override
 	public void process(Payment payment) {
 
-		paymentRestService.process(payment);
+		paymentRestClient.process(payment);
 	}
 }

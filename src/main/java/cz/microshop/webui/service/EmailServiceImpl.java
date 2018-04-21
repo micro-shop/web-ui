@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 public class EmailServiceImpl implements EmailService {
 
 	@Autowired
-	private EmailRestService emailRestService;
+	private EmailRestClient emailRestClient;
 
 	@Override
 	public void send(Email email) {
-		emailRestService.send(email);
+		emailRestClient.send(email);
 	}
 }

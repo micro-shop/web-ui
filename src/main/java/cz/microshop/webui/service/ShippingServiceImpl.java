@@ -10,7 +10,7 @@ import java.util.List;
 public class ShippingServiceImpl implements ShippingService {
 
 	@Autowired
-	private ShippingRestService shippingRestService;
+	private ShippingRestClient shippingRestService;
 	
 	@Override
 	public List<Shipping> findAllShippings() {
