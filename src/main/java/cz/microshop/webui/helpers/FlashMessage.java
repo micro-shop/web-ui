@@ -20,7 +20,7 @@ public class FlashMessage {
 		redirectAttributes.addFlashAttribute("flashMessage", message);
 	}
 	
-	public static String createOrderContentsMessage(Order order, User user2) {
+	public static String createOrderContentsMessage(Order order, User user) {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("<html>");
 		stringBuilder.append("<head>");
@@ -41,32 +41,35 @@ public class FlashMessage {
 		stringBuilder.append("</head>");
 		stringBuilder.append("<body>");
 		stringBuilder.append("<p>");
-		stringBuilder.append("Hello " + user2.getFirstName() + " " + user2.getLastName() + "(" + user2.getUsername() + ").");
-		stringBuilder.append("Thank you for purchasing products in our web shop. Here is list with bought products:");
+		stringBuilder.append("Dobrý den uživateli " + user.getFirstName() + " " + user.getLastName() + "(" + user.getUsername() + ").");
+		stringBuilder.append("Děkujeme za nákup. Níže Vám zasíláme seznam zakoupeného zboží:");
 		stringBuilder.append("</p>");
 		stringBuilder.append("<table>");
 		stringBuilder.append("<tr>");
-		stringBuilder.append("<th>Product</th>");
-		stringBuilder.append("<th>Quantity</th>");
-		stringBuilder.append("<th>Price</th>");
+		stringBuilder.append("<th>Produkt</th>");
+		stringBuilder.append("<th>Množství</th>");
+		stringBuilder.append("<th>Cena</th>");
 		stringBuilder.append("</tr>");
 		for(OrderItem orderDetails : order.getOrderItems()) {
 			stringBuilder.append("<tr>");
 			stringBuilder.append("<td>" + orderDetails.getProductName() + "</td>");
 			stringBuilder.append("<td>" + orderDetails.getQuantity() + "</td>");
-			stringBuilder.append("<td>" + orderDetails.getUnitPrice() + "$</td>");
+			stringBuilder.append("<td>" + orderDetails.getUnitPrice() + " Kč</td>");
 			stringBuilder.append("</tr>");
 		}
 		stringBuilder.append("<tr>");
-		stringBuilder.append("<td colspan=\"2\">Shipping: " + order.getShipping().getPrice().toString() + "$</td>");
+		stringBuilder.append("<td colspan=\"2\">Doprava: " + order.getShipping().getPrice().toString() + " Kč</td>");
 		
-		stringBuilder.append("<td>Total: " + order.getTotalWithShipping().toString() + "$</td>");
+		stringBuilder.append("<td>Celková cena: " + order.getTotalWithShipping().toString() + " Kč</td>");
 		stringBuilder.append("</tr>");
 		stringBuilder.append("</table>");
 		stringBuilder.append("<p>");
-		stringBuilder.append("The current status of your purchase is: " + order.getStatus());
-		stringBuilder.append("<br />We will send you next email messages with further instructions and notifications. BR OnlineShop.");
-		stringBuilder.append("</p>");		
+		stringBuilder.append("Aktuální stav Vaší objednávky je: " + order.getStatus());
+		stringBuilder.append("<br />O dalším postupu Vás budeme informovat prostřednicvím emailu. BR OnlineShop.");
+		stringBuilder.append("<br />");
+		stringBuilder.append("<br />S pozdravem");
+		stringBuilder.append("<br />Microshop");
+		stringBuilder.append("</p>");
 		stringBuilder.append("</body>");
 		stringBuilder.append("</html>");
 		return stringBuilder.toString();
