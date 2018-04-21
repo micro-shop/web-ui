@@ -39,12 +39,6 @@
                                         <img th:if="${product.productImageUrl != null}" th:src="${product.productImageUrl}" alt=""/>
                                         <img th:if="${product.productImageUrl == null}" src="/img/img_not_found.gif"/>
                                     </div>
-                                    
-                                    <div class="product-gallery">
-                                        <img src="/img/product-thumb-1.jpg" alt=""/>
-                                        <img src="/img/product-thumb-2.jpg" alt=""/>
-                                        <img src="/img/product-thumb-3.jpg" alt=""/>
-                                    </div>
                                 </div>
                             </div>
                             
@@ -52,21 +46,9 @@
                                 <div class="product-inner">
                                     <h2 class="product-name" th:text="${product.name}">Sony Smart TV - 2015</h2>
                                     <div class="product-inner-price">
-                                        <ins th:text="${#strings.append(product.price, ' Kč')}">$899.00</ins>
-                                    </div>    
-                                    
-                                    <form th:action="@{/cart/add_to_cart}" class="cart" method="post">
-                                        <input type="hidden" th:value="${product.id}" name="product_id" />
-                                        <div class="quantity">
-                                            <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1"/>
-                                        </div>
-                                        <button type="submit" class="add_to_cart_button" data-quantity="quantity" data-product_sku="" data-product_id="product_id" rel="nofollow" >Vložit do košíku</button>
-                                    </form>
-                                    
-                                    <div class="product-inner-category">
-                                        <p>Category: <a href="">Summer</a>. Tags: <a href="">awesome</a>, <a href="">best</a>, <a href="">sale</a>, <a href="">shoes</a>. </p>
-                                    </div> 
-                                    
+                                        <ins th:text="${#strings.append(product.price, ' Kč')}">899 Kč</ins>
+                                    </div>
+
                                     <div role="tabpanel">
                                         <ul class="product-tab" role="tablist">
                                             <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Popis</a></li>
@@ -79,29 +61,23 @@
 
                                                 <p>Mauris placerat vitae lorem gravida viverra. Mauris in fringilla ex. Nulla facilisi. Etiam scelerisque tincidunt quam facilisis lobortis. In malesuada pulvinar neque a consectetur. Nunc aliquam gravida purus, non malesuada sem accumsan in. Morbi vel sodales libero.</p>
                                             </div>
-                                            <div role="tabpanel" class="tab-pane fade" id="profile">
-                                                <h2>Recenze</h2>
-                                                <div class="submit-review">
-                                                    <p><label for="name">Jméno</label> <input name="name" type="text"/></p>
-                                                    <p><label for="email">Email</label> <input name="email" type="email"/></p>
-                                                    <div class="rating-chooser">
-                                                        <p>Vaše hodnocení</p>
-
-                                                        <div class="rating-wrap-post">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                        </div>
-                                                    </div>
-                                                    <p><label for="review">Vaše recenze</label> <textarea name="review" id="" cols="30" rows="10"></textarea></p>
-                                                    <p><input type="submit" value="Submit"/></p>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
-                                    
+
+                                    <form th:action="@{/cart/add_to_cart}" class="cart" method="post">
+                                        <input type="hidden" th:value="${product.id}" name="product_id" />
+                                        <div class="quantity">
+                                            <label for="quantity">Množství</label>
+                                            <br/>
+                                            <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1"/>
+                                        </div>
+                                        <button type="submit" class="add_to_cart_button" data-quantity="quantity" data-product_sku="" data-product_id="product_id" rel="nofollow" >Vložit do košíku</button>
+                                    </form>
+
+                                    <div class="product-inner-category">
+                                        <p></p>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
