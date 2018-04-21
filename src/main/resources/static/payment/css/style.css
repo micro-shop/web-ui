@@ -123,14 +123,14 @@ body {
   transition: color 0.5s;
 }
 .container .col1 .card .front .date:after {
-  content: 'MONTH / YEAR';
+  content: 'MĚSÍC / ROK';
   position: absolute;
   display: block;
   font-size: 7px;
   margin-left: 20px;
 }
 .container .col1 .card .front .date:before {
-  content: 'valid \a thru';
+  content: 'EXPIRACE';
   position: absolute;
   display: block;
   font-size: 8px;
