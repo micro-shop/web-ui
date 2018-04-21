@@ -130,7 +130,7 @@ body {
   margin-left: 20px;
 }
 .container .col1 .card .front .date:before {
-  content: 'EXPIRACE';
+  content: '';
   position: absolute;
   display: block;
   font-size: 8px;
