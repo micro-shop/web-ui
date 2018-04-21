@@ -67,13 +67,15 @@
 		                    	<td>   </td>
 		                        <td>   </td>
 		                        <td>   </td>
-		                        <td><h3>Celková cena</h3></td>
+		                        <td><h3>Celkem</h3></td>
 		                        <td class="text-right"><h3 th:text="${#strings.concat(order.totalWithShipping, ' Kč')}"></h3></td>
 		                    </tr>
 							<tr>
 								<th>Cena dopravy</th>
 								<td>&nbsp;</td>
-								<th th:text="${#strings.concat(order.shipping.price, ' Kč')}"></th>
+								<td>   </td>
+								<td>   </td>
+								<th class="text-center" th:text="${#strings.concat(order.shipping.price, ' Kč')}"></th>
 							</tr>
 		                    <tr>
 								<td>
