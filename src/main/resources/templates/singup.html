@@ -61,7 +61,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" th:value="${user.username}" id="username" name="username" roleId="username"  placeholder="Enter your Username" required="required"/>
+									<input type="text" class="form-control" th:value="${user.username}" id="username" name="username" roleId="username"  placeholder="Vyplňte uživatelské jméno" required="required"/>
 								</div>
 							</div>
 						</div>
@@ -71,7 +71,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-home fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" th:value="${user.address}" id="address" name="address" roleId="address"  placeholder="Enter your address" required="required"/>
+									<input type="text" class="form-control" th:value="${user.address}" id="address" name="address" roleId="address"  placeholder="Vyplňte svou adresu" required="required"/>
 								</div>
 							</div>
 						</div>
@@ -81,7 +81,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" th:value="${user.postcode}" id="postcode" name="postcode" roleId="postcode"  placeholder="Enter your postcode" required="required"/>
+									<input type="text" class="form-control" th:value="${user.postcode}" id="postcode" name="postcode" roleId="postcode"  placeholder="Vyplňte PSČ" required="required"/>
 								</div>
 							</div>
 						</div>
@@ -91,7 +91,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-building fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" th:value="${user.city}" id="city" name="city" roleId="city"  placeholder="Enter your city" required="required"/>
+									<input type="text" class="form-control" th:value="${user.city}" id="city" name="city" roleId="city"  placeholder="Vyplňte město bydliště" required="required"/>
 								</div>
 							</div>
 						</div>
@@ -101,7 +101,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" id="password" name="password" roleId="password"  placeholder="Enter your Password" required="required"/>
+									<input type="password" class="form-control" id="password" name="password" roleId="password"  placeholder="Vyplňte heslo" required="required"/>
 								</div>
 							</div>
 						</div>
@@ -111,7 +111,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" id="passwordConfirmation" name="passwordConfirmation" roleId="passwordConfirmation"  placeholder="Confirm your Password" required="required"/>
+									<input type="password" class="form-control" id="passwordConfirmation" name="passwordConfirmation" roleId="passwordConfirmation"  placeholder="Potvrďte zvolené heslo" required="required"/>
 								</div>
 							</div>
 						</div>
@@ -132,7 +132,7 @@
 						<hr />
 
 						<div class="form-group ">
-							<a  class="btn btn-info btn-lg btn-block login-button" th:href="@{/}">Zrušit</a>
+							<a  class="btn btn-info btn-lg btn-block login-button" th:href="@{/}" style="background-color: silver;">Zrušit</a>
 						</div>
 					</form>
 					<hr />
@@ -141,8 +141,4 @@
 			</div>
 		</div>
 	</body>
-
-    <!-- /.container -->
-    <div th:replace="common/header :: footer-area"/>
-    <div th:replace="common/header :: body-bottom-scripts"/>
 </html>
