@@ -71,12 +71,12 @@
 		                        <td class="text-right"><h3 th:text="${#strings.concat(order.totalWithShipping, ' Kč')}"></h3></td>
 		                    </tr>
 		                    <tr>
-		                    	<td>   </td>
+								<td>
+									<a th:href="@{/order/my_orders}" class="btn btn-default btn-lg">Přehled objednávek</a>
+								</td>
 		                        <td>   </td>
-		                        <td><a th:href="@{/order/my_orders}" class="btn btn-warning btn-sm">Zpět do obchodu</a>   </td>
-		                        <td>
-		                        	
-		                        </td>
+		                        <td>   </td>
+		                        <td>   </td>
 		                        <td>
 		                        <input type="hidden" name="business" value="darglk-facilitator@gmail.com" />
 		                        <input type="hidden" name="cmd" value="_xclick" />
