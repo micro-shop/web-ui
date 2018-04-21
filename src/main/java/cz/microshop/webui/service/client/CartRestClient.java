@@ -1,4 +1,4 @@
-package cz.microshop.webui.service;
+package cz.microshop.webui.service.client;
 
 import cz.microshop.webui.model.Cart;
 import cz.microshop.webui.model.Item;

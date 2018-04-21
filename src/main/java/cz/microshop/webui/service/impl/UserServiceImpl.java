@@ -1,8 +1,10 @@
-package cz.microshop.webui.service;
+package cz.microshop.webui.service.impl;
 
 import cz.microshop.webui.model.PasswordResetToken;
 import cz.microshop.webui.model.User;
 import cz.microshop.webui.security.UserRole;
+import cz.microshop.webui.service.UserService;
+import cz.microshop.webui.service.client.UserRestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

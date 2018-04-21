@@ -1,6 +1,6 @@
 package cz.microshop.webui.config;
 
-import cz.microshop.webui.service.UserSecurityService;
+import cz.microshop.webui.service.impl.UserSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

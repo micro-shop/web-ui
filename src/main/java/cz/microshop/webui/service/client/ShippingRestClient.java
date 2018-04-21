@@ -1,4 +1,4 @@
-package cz.microshop.webui.service;
+package cz.microshop.webui.service.client;
 
 import cz.microshop.webui.model.Shipping;
 import org.springframework.beans.factory.annotation.Value;

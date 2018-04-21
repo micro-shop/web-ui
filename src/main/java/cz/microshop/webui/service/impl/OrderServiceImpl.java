@@ -1,6 +1,10 @@
-package cz.microshop.webui.service;
+package cz.microshop.webui.service.impl;
 
 import cz.microshop.webui.model.*;
+import cz.microshop.webui.service.OrderService;
+import cz.microshop.webui.service.client.CartRestClient;
+import cz.microshop.webui.service.client.OrderRestClient;
+import cz.microshop.webui.service.client.ProductRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,8 @@
-package cz.microshop.webui.service;
+package cz.microshop.webui.service.impl;
 
 import cz.microshop.webui.model.Payment;
+import cz.microshop.webui.service.PaymentService;
+import cz.microshop.webui.service.client.PaymentRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
