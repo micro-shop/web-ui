@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
             .antMatchers(
             		"/health","/error/**/*","/webjars/**","/css/**","/images/**","/fonts/**","/js/**","/img/**","/payment/**","/console/**","/forgotPassword",
-            		"/","/login*", "/logout*", "/signin/**", "/singup/**", "/customLogin",
+            		"/","/login*", "/logout*", "/signin/**", "/signup/**", "/customLogin",
                     "/user/resetPassword*",
                     "/user/changePassword*", "/resources/**", "/product/**").permitAll()
             .antMatchers("/invalidSession*").anonymous()
