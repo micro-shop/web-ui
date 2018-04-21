@@ -14,7 +14,7 @@
 		                    <tr>
 		                        <th>Produkt</th>
 		                        <th>&nbsp;</th>
-		                        <th class="col-md-2">Množství</th>
+		                        <th class="col-md-2 text-center">Množství</th>
 		                        <th class="col-md-2 text-center">Cena</th>
 		                        <th class="col-md-2 text-center">Cena celkem</th>
 		                        <th> </th>
@@ -34,15 +34,11 @@
 		                        </td>
 		                        <td class="col-sm-1 col-md-1 text-center"><strong th:text="${#strings.concat(lineItem.unitPrice, ' Kč')}"></strong></td>
 		                        <td class="col-sm-1 col-md-1 text-center"><strong th:text="${#strings.concat(lineItem.unitPrice * lineItem.quantity, ' Kč')}"></strong></td>
-		                        <td class="col-sm-1 col-md-1">
-		                        	&nbsp;
-		                        </td>
 		                    </tr>
 		                </tbody>
 		                <tfoot>
 		                    <tr>
 		                    	<td>   </td>
-		                        <td>   </td>
 		                        <td>   </td>
 		                        <td>   </td>
 		                        <td><h3>Cena celkem</h3></td>
@@ -56,14 +52,14 @@
 								</td>
 		                        <td>   </td>
 		                        <td>   </td>
-		                        <td>   </td>
 		                        <td>
+									<label for="shipping">Vybraná doprava</label>
 		                        	<select name="shipping">
 		                        		<option th:each="shipOption: ${shipping}" th:value="${shipOption.name}" th:text="${#strings.concat(shipOption.price, ' Kč ', shipOption.name)}"></option>
 		                        	</select>
 		                        </td>
 		                        <td>
-		                        <button type="submit" class="btn btn-success btn-sm">
+		                        <button type="submit" class="btn btn-success btn-lg">
 		                            Odeslat objednávku <i class="fa fa-play" aria-hidden="true"></i>
 		                        </button></td>
 		                    </tr>
