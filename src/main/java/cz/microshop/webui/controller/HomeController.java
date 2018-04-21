@@ -141,19 +141,19 @@ public class HomeController {
 
 	private void checkExistenceOfPhoneNumber(User user2, List<String> errorMessages) {
 		if(userService.checkPhoneNumberExists(user2.getPhone())) {
-			errorMessages.add("Phone number exists in database.");
+			errorMessages.add("Telefon je již použit.");
 		}
 	}
 
 	private void checkExistenceOfUsername(User user2, List<String> errorMessages) {
 		if (userService.checkUsernameExists(user2.getUsername())) {
-			errorMessages.add("Username exists in database.");
+			errorMessages.add("Uživatel je již registrován.");
 		}
 	}
 
 	private void checkExistenceOfEmail(User user2, List<String> errorMessages) {
 		if (userService.checkEmailExists(user2.getEmail())) {
-			errorMessages.add("Email exists in database.");
+			errorMessages.add("Email již existuje.");
 		}
 	}
 }
