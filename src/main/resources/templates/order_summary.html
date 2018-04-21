@@ -3,21 +3,20 @@
 <head th:replace="common/header :: common-header"/>
 <head th:replace="common/header :: navbar" />
 <!-- Page Content -->
-    <div class="container">
 
-		<div class="row">
-			<div class="product-big-title-area">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="product-bit-title text-center">
-								<h2>Souhrn objednávky</h2>
-							</div>
-						</div>
+	<div class="product-big-title-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="product-bit-title text-center">
+						<h2>Souhrn objednávky</h2>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+
+    <div class="container">
 
       <div class="row">
 
@@ -38,9 +37,9 @@
 		                    <tr>
 		                        <th>Produkt</th>
 		                        <th>&nbsp;</th>
-		                        <th>Množství</th>
-		                        <th class="text-center">Cena</th>
-		                        <th class="text-center">Celková cena</th>
+								<th class="col-md-2 text-center">Množství</th>
+								<th class="col-md-2 text-center">Cena</th>
+								<th class="col-md-2 text-center">Cena celkem</th>
 		                        <th> </th>
 		                    </tr>
 		                </thead>
@@ -68,13 +67,11 @@
 		                    	<td>   </td>
 		                        <td>   </td>
 		                        <td>   </td>
-		                        <td>   </td>
 		                        <td><h3>Celková cena</h3></td>
 		                        <td class="text-right"><h3 th:text="${#strings.concat(order.totalWithShipping, ' Kč')}"></h3></td>
 		                    </tr>
 		                    <tr>
 		                    	<td>   </td>
-		                        <td>   </td>
 		                        <td>   </td>
 		                        <td><a th:href="@{/order/my_orders}" class="btn btn-warning btn-sm">Zpět do obchodu</a>   </td>
 		                        <td>
