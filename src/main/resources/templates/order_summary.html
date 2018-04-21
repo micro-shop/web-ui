@@ -63,13 +63,6 @@
 		                    </tr>
 		                </tbody>
 		                <tfoot>
-		                    <tr>
-		                    	<td>   </td>
-		                        <td>   </td>
-		                        <td>   </td>
-		                        <td class="text-center"><h3>Celkem</h3></td>
-		                        <td class="text-right"><h3 th:text="${#strings.concat(order.totalWithShipping, ' Kč')}"></h3></td>
-		                    </tr>
 							<tr>
 								<th>Cena dopravy</th>
 								<td>&nbsp;</td>
@@ -77,6 +70,13 @@
 								<td>   </td>
 								<th class="text-center" th:text="${#strings.concat(order.shipping.price, ' Kč')}"></th>
 							</tr>
+		                    <tr>
+		                    	<td>   </td>
+		                        <td>   </td>
+		                        <td>   </td>
+		                        <td class="text-center"><h3>Celkem</h3></td>
+		                        <td class="text-right"><h3 th:text="${#strings.concat(order.totalWithShipping, ' Kč')}"></h3></td>
+		                    </tr>
 		                    <tr>
 								<td>
 									<a th:href="@{/order/my_orders}" class="btn btn-default btn-lg">Přehled objednávek</a>
@@ -95,6 +95,6 @@
       
 	</div>
 	<!-- /.container -->
-    <div th:replace="common/header :: body-bottom-footer"/>
-    <div th:replace="common/header :: body-bottom-scripts"/>
+	<div th:replace="common/header :: footer-area"/>
+	<div th:replace="common/header :: body-bottom-scripts"/>
 </html>
