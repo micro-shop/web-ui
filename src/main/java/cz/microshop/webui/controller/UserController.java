@@ -79,9 +79,7 @@ public class UserController {
 	    }
 	    FlashMessage.createFlashMessage("alert-success", "Vaše heslo bylo změněno.", redirectAttributes);
 	    userService.updateUserPassword(user);
-		System.out.println("User " + user.getUserId() + " role " + user.getUserRoles().toString() + " changedPass");
-		SecurityContextHolder.getContext()
-				.getAuthentication().getAuthorities().stream().forEach(o -> System.out.println("Authority" + o.getAuthority()));
+		SecurityContextHolder.clearContext();
 	    return "redirect:/";
 	}	
 
