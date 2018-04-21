@@ -6,6 +6,8 @@ import cz.microshop.webui.model.PasswordResetToken;
 import cz.microshop.webui.model.User;
 import cz.microshop.webui.service.EmailService;
 import cz.microshop.webui.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,6 +32,8 @@ import java.util.Locale;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private UserDetailsService securityService;
@@ -75,6 +79,9 @@ public class UserController {
 	    }
 	    FlashMessage.createFlashMessage("alert-success", "Vaše heslo bylo změněno.", redirectAttributes);
 	    userService.updateUserPassword(user);
+		LOG.debug("User " + user.getUserId() + " role " + user.getUserRoles().toString() + " changedPass");
+		SecurityContextHolder.getContext()
+				.getAuthentication().getAuthorities().stream().forEach(o -> LOG.debug("Authority" + o.getAuthority()));
 	    return "redirect:/";
 	}	
 
