@@ -67,7 +67,7 @@
 		                    	<td>   </td>
 		                        <td>   </td>
 		                        <td>   </td>
-		                        <td><h3>Celkem</h3></td>
+		                        <td class="text-center"><h3>Celkem</h3></td>><h3>Celkem</h3></td>
 		                        <td class="text-right"><h3 th:text="${#strings.concat(order.totalWithShipping, ' Kč')}"></h3></td>
 		                    </tr>
 							<tr>
@@ -85,19 +85,7 @@
 		                        <td>   </td>
 		                        <td>   </td>
 		                        <td>
-		                        <input type="hidden" name="business" value="darglk-facilitator@gmail.com" />
-		                        <input type="hidden" name="cmd" value="_xclick" />
-		                        <input type="hidden" name="upload" value="1" />
-		                        <input type="hidden" name="return" value="http://localhost:8080" />
-		                        <input type="hidden" name="invoice" th:attr="value=${order.orderId}" />
-		                        <input type="hidden" name="amount" th:attr="value=${order.totalWithShipping}" />
-		                        <input type="hidden" name="item_name" value="order in shop" />
-		                        <input type="hidden" name="item_number" th:attr="value=${order.orderId}" />
-		                        <input type="hidden" name="quantity" value="1" />
-		                        <input type="hidden" name="notify_url" value="http://localhost:8080/order/hook" />
-		                        <button type="submit" class="btn btn-success btn-sm">
-		                            Zaplatit objednávku <i class="fa fa-play" aria-hidden="true"></i>
-		                        </button></td>
+		                        <button type="submit" class="btn btn-success btn-lg">Přejít k platbě</button></td>
 		                    </tr>
 		                </tfoot>
 		            </table>
