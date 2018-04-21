@@ -45,9 +45,19 @@
                             <div class="col-sm-6">
                                 <div class="product-inner">
                                     <h2 class="product-name" th:text="${product.name}">Sony Smart TV - 2015</h2>
-                                    <div class="product-inner-price">
+                                    <div class="product-inner-price" style="font-size: 40px;">
                                         <ins th:text="${#strings.append(product.price, ' Kč')}">899 Kč</ins>
                                     </div>
+
+                                    <form th:action="@{/cart/add_to_cart}" class="cart" method="post">
+                                        <input type="hidden" th:value="${product.id}" name="product_id" />
+                                        <div class="quantity">
+                                            <label for="quantity">Množství</label>
+                                            <br/>
+                                            <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1"/>
+                                        </div>
+                                        <button style="padding: 19px 20px;" type="submit" class="add_to_cart_button" data-quantity="quantity" data-product_sku="" data-product_id="product_id" rel="nofollow" >Vložit do košíku</button>
+                                    </form>
 
                                     <div role="tabpanel">
                                         <ul class="product-tab" role="tablist">
@@ -63,16 +73,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <form th:action="@{/cart/add_to_cart}" class="cart" method="post">
-                                        <input type="hidden" th:value="${product.id}" name="product_id" />
-                                        <div class="quantity">
-                                            <label for="quantity">Množství</label>
-                                            <br/>
-                                            <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1"/>
-                                        </div>
-                                        <button type="submit" class="add_to_cart_button" data-quantity="quantity" data-product_sku="" data-product_id="product_id" rel="nofollow" >Vložit do košíku</button>
-                                    </form>
 
                                     <div class="product-inner-category">
                                         <p></p>
